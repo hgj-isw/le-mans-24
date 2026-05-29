@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Le Mans 24h Live Pool 2026 - PRO</title>
+    <title>Le Mans 24h Live Pool 2026 - PRO AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -23,7 +23,7 @@
         <div class="bg-gradient-to-r from-red-700 via-slate-900 to-blue-700 h-1 w-full"></div>
         <div class="p-3 text-center">
             <h1 class="text-xl font-black tracking-wider uppercase text-white drop-shadow-md">🏎️ Le Mans Pool</h1>
-            <div class="text-2xs text-slate-400 mt-0.5 font-semibold tracking-widest uppercase">Jasper 🆚 Wilfried | 2026 Pro</div>
+            <div class="text-2xs text-slate-400 mt-0.5 font-semibold tracking-widest uppercase">Jasper 🆚 Wilfried | 2026 Pro AI</div>
         </div>
 
         <div class="grid grid-cols-2 text-center pb-3 pt-1">
@@ -59,11 +59,32 @@
                 </div>
                 
                 <div class="grid grid-cols-2 gap-3 mb-3">
-                    <button onclick="generateShareLink()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold py-3.5 px-2 rounded-xl text-xs shadow-md flex items-center justify-center active:scale-95 transition-all">🔗 Kopieer Link</button>
-                    <button onclick="importSyncLink()" class="w-full bg-slate-800 border border-slate-700 text-white font-bold py-3.5 px-2 rounded-xl text-xs shadow-md flex items-center justify-center active:scale-95 transition-all">📥 Plak Link</button>
+                    <button onclick="fetchLiveStandingsWithAI()" id="btn-ai-update" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3.5 px-2 rounded-xl text-xs shadow-md flex items-center justify-center active:scale-95 transition-all">🤖 AI Live Update</button>
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-1 flex items-center justify-between px-3">
+                        <span class="text-3xs font-bold text-slate-400 uppercase">Auto (5m)</span>
+                        <input type="checkbox" id="ai-auto-toggle" onchange="toggleAutoAI(this.checked)" class="w-4 h-4 rounded text-purple-600 bg-slate-800 border-slate-700 focus:ring-purple-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <button onclick="generateShareLink()" class="w-full bg-slate-800 border border-slate-700 text-white font-bold py-3 px-2 rounded-xl text-xs shadow-md flex items-center justify-center active:scale-95 transition-all">🔗 Kopieer Link</button>
+                    <button onclick="importSyncLink()" class="w-full bg-slate-800 border border-slate-700 text-white font-bold py-3 px-2 rounded-xl text-xs shadow-md flex items-center justify-center active:scale-95 transition-all">📥 Plak Link</button>
                 </div>
 
                 <button onclick="resetAll()" class="w-full bg-slate-950/50 border border-red-900/30 text-red-400/70 py-2.5 rounded-xl text-2xs uppercase tracking-wider hover:text-red-400 transition-colors">Systeem Reset</button>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
+                <details class="group cursor-pointer">
+                    <summary class="text-xs font-bold text-purple-400 uppercase tracking-widest flex items-center select-none py-1">
+                        <svg class="w-3 h-3 mr-2 transition-transform duration-200 group-open:rotate-90 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        🔑 Google Gemini API Setup
+                    </summary>
+                    <div class="mt-3 space-y-2">
+                        <p class="text-3xs text-slate-400 leading-relaxed">Plak hier je sleutel uit Google AI Studio. Deze wordt veilig lokaal bewaard en nooit gedeeld.</p>
+                        <input type="password" id="api-key-input" placeholder="AIzaSy..." onchange="saveApiKey(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl text-xs text-slate-200 placeholder-slate-600 outline-none focus:border-purple-500 p-2.5 font-mono">
+                    </div>
+                </details>
             </div>
 
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
@@ -121,7 +142,7 @@
                 { id: 'l4', name: 'Cool Racing #37', car: 'Oreca 07', num: '37', drivers: [{n:'A. Coigny', cc:'ch'}, {n:'M. Jakobsen', cc:'dk'}, {n:'R. Miyata', cc:'jp'}] },
                 { id: 'l5', name: 'AO by TF #199 ("Spike")', car: 'Oreca 07', num: '199', drivers: [{n:'P. Hyett', cc:'us'}, {n:'L. Delétraz', cc:'ch'}, {n:'A. Quinn', cc:'gb'}] }, 
                 { id: 'l6', name: 'Vector Sport #10', car: 'Oreca 07', num: '10', drivers: [{n:'R. Cullen', cc:'ie'}, {n:'P. Pilet', cc:'fr'}, {n:'S. Richelmi', cc:'mc'}] },
-                { id: 'l7', name: 'Alvarve Pro #25', car: 'Oreca 07', num: '25', drivers: [{n:'O. Caldwell', cc:'gb'}, {n:'M. McMurry', cc:'us'}, {n:'C. Braun', cc:'us'}] }, 
+                { id: 'l7', name: 'Algarve Pro #25', car: 'Oreca 07', num: '25', drivers: [{n:'O. Caldwell', cc:'gb'}, {n:'M. McMurry', cc:'us'}, {n:'C. Braun', cc:'us'}] }, 
                 { id: 'l8', name: 'Nielsen Racing #24', car: 'Oreca 07', num: '24', drivers: [{n:'F. Scherer', cc:'ch'}, {n:'D. Heinemeier Hansson', cc:'dk'}, {n:'A. Costa', cc:'es'}] },
                 { id: 'l9', name: 'Panis Racing #65', car: 'Oreca 07', num: '65', drivers: [{n:'N. Jamin', cc:'fr'}, {n:'J. van der Helm', cc:'nl'}, {n:'S. Huffaker', cc:'us'}] }, 
                 { id: 'l10', name: 'IDEC Sport #28', car: 'Oreca 07', num: '28', drivers: [{n:'P. Lafargue', cc:'fr'}, {n:'R. de Gerus', cc:'fr'}, {n:'J. van Uitert', cc:'nl'}] }
@@ -153,17 +174,18 @@
         };
 
         const DEFAULT_POINTS = { 1: 25, 2: 18, 3: 15, 4: 12, 5: 10, 6: 8, 7: 6, 8: 4, 9: 2, 10: 1 };
-        let state = { assignments: {}, positions: {}, history: { Jasper: [], Wilfried: [] }, points: { ...DEFAULT_POINTS } };
+        let state = { assignments: {}, positions: {}, history: { Jasper: [], Wilfried: [] }, points: { ...DEFAULT_POINTS }, apiKey: "", autoAI: false };
         let chart = null;
+        let aiInterval = null;
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            const colors = type === 'error' ? 'bg-red-600' : (type === 'info' ? 'bg-blue-600' : 'bg-emerald-600');
+            const colors = type === 'error' ? 'bg-red-600' : (type === 'info' ? 'bg-blue-600' : 'bg-purple-600');
             toast.className = `${colors} text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold tracking-wide toast-animate`;
             toast.innerHTML = message;
             container.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 3000);
+            setTimeout(() => { toast.remove(); }, 3500);
         }
 
         function switchTab(tabId) {
@@ -174,6 +196,106 @@
             document.getElementById(`panel-${tabId}`).classList.remove('hidden');
             document.getElementById(`tab-${tabId}`).className = 'flex-1 text-center py-2.5 text-xs font-bold rounded-lg bg-slate-800 text-white shadow-inner min-w-[65px]';
         }
+
+        // --- GEMINI AI LIVE TIMING PARSER SCRIPT ---
+        function saveApiKey(key) {
+            state.apiKey = key.trim();
+            saveToLocalStorage();
+            showToast("🔑 Sleutel lokaal beveiligd opgeslagen!");
+        }
+
+        function toggleAutoAI(checked) {
+            state.autoAI = checked;
+            saveToLocalStorage();
+            if (aiInterval) clearInterval(aiInterval);
+            
+            if (checked) {
+                if (!state.apiKey) {
+                    showToast("Voer eerst een geldige Gemini API key in!", "error");
+                    document.getElementById('ai-auto-toggle').checked = false;
+                    state.autoAI = false;
+                    saveToLocalStorage();
+                    return;
+                }
+                showToast("🔄 Auto-update geactiveerd: Elke 5 minuten.", "info");
+                fetchLiveStandingsWithAI(); // Direct een keer uitvoeren
+                aiInterval = setInterval(fetchLiveStandingsWithAI, 5 * 60 * 1000);
+            } else {
+                showToast("⏹️ Auto-update uitgeschakeld.");
+            }
+        }
+
+        async function fetchLiveStandingsWithAI() {
+            if (!state.apiKey) {
+                showToast("Geen API-key gevonden! Open de Setup tab hieronder.", "error");
+                return;
+            }
+
+            const btn = document.getElementById('btn-ai-update');
+            const originalText = btn.innerText;
+            btn.innerText = "🤖 AI Zoekt Live...";
+            btn.disabled = true;
+
+            const promptText = `Search the internet for the current live standings/results of the 2026 Le Mans 24 Hours race. 
+            Identify the current top 10 running order of car numbers for each of these classes: Hypercar, LMP2, LMP2 Pro-Am (often listed under LMP2), and LMGT3.
+            Map them strictly to these exact JSON keys: 'hyper', 'lmp2', 'lmp2am', 'lmgt3'.
+            Provide ONLY a valid JSON object containing lists of string numbers. 
+            Example structure: {"hyper":["7","50","15"],"lmp2":["43","22"],"lmp2am":["183","45"],"lmgt3":["92","69"]}. 
+            Do not include markdown blocks or prose, just the raw JSON text.`;
+
+            try {
+                // Call Gemini using fetch with Google Search tool enabled
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${state.apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptText }] }],
+                        tools: [{ googleSearch: {} }], // Schakelt Live Google Search Grounding in!
+                        generationConfig: { responseMimeType: "application/json" }
+                    })
+                });
+
+                if (!response.ok) throw new Error("API reageert niet correct. Check je key.");
+                
+                const data = await response.json();
+                let jsonText = data.candidates[0].content.parts[0].text;
+                
+                // Parse de JSON van de AI
+                const parsedStandings = JSON.parse(jsonText.trim());
+                
+                // Update het systeem per klasse
+                let totalUpdated = 0;
+                Object.keys(parsedStandings).forEach(cat => {
+                    if (TEAMS[cat]) {
+                        // Reset eerst de klasse
+                        TEAMS[cat].forEach(t => { state.positions[t.id] = '-'; });
+                        
+                        // Vul nieuwe posities in
+                        parsedStandings[cat].forEach((num, index) => {
+                            const team = TEAMS[cat].find(t => t.num === num.toString());
+                            if (team && index < 10) {
+                                state.positions[team.id] = (index + 1).toString();
+                                totalUpdated++;
+                            }
+                        });
+                    }
+                });
+
+                saveToLocalStorage(); 
+                renderLists(); 
+                calculateScores(); 
+                updateChart();
+                showToast(`🤖 AI Update succesvol! ${totalUpdated} auto's geplaatst.`);
+
+            } catch (error) {
+                console.error(error);
+                showToast("Fout bij AI Live-update. Probeer handmatig.", "error");
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        }
+        // --- EINDE AI PARSER LOGICA ---
 
         function triggerLottery() {
             if (Object.keys(state.assignments).length > 0 && !confirm("Opnieuw loten? Huidige teams gaan verloren.")) return;
@@ -221,7 +343,7 @@
                 container.innerHTML += `
                     <div class="bg-slate-950/60 p-1.5 rounded-lg border border-slate-800/60">
                         <div class="text-3xs text-slate-500 font-bold mb-0.5">P${i}</div>
-                        <input type="number" value="${state.points[i]}" oninput="updatePointValue(${i}, this.value)" class="w-full bg-slate-900 border border-slate-700 rounded text-center text-xs font-black text-white outline-none focus:border-blue-500 py-1 px-0.5">
+                        <input type="number" value="${state.points[i]}" oninput="updatePointValue(${i}, this.value)" class="w-full bg-slate-900 border border-slate-700 rounded text-center text-xs font-black text-white outline-none focus:border-purple-500 py-1 px-0.5">
                     </div>
                 `;
             }
@@ -264,13 +386,13 @@
             foundTeams.sort((a, b) => a.index - b.index);
 
             if (foundTeams.length === 0) {
-                showToast("Geen herkenbare autonummers gevonden voor deze klasse in de tekst.", "error");
+                showToast("Geen herkenbare autonummers gevonden voor deze klasse.", "error");
                 return;
             }
 
             const orderedNumbers = foundTeams.map(f => TEAMS[cat].find(t => t.id === f.id).num);
             processNumbersToPositions(cat, orderedNumbers);
-            showToast(`🤖 Live timing tekst succesvol verwerkt voor ${cat.toUpperCase()}!`);
+            showToast(`🤖 Tekst succesvol verwerkt voor ${cat.toUpperCase()}!`);
         }
 
         function processNumbersToPositions(cat, numbers) {
@@ -289,7 +411,6 @@
         function applySelectStyling(id, val) {
             const el = document.getElementById(`select-${id}`);
             if (!el) return;
-            // Grotere touch target toegevoegd met py-2.5 voor mobiele ergonomie
             el.className = "bg-slate-900 border appearance-none outline-none rounded-xl py-2.5 px-1 text-xs font-bold w-16 text-center transition-colors shadow-inner min-h-[40px]";
             if (val == '1') el.classList.add('border-amber-400', 'text-amber-400', 'bg-amber-950/30');
             else if (val == '2') el.classList.add('border-slate-300', 'text-slate-300', 'bg-slate-800');
@@ -314,7 +435,8 @@
 
         function generateShareLink() {
             try {
-                const shareUrl = `${window.location.origin}${window.location.pathname}?state=${btoa(JSON.stringify(state))}`;
+                const shareState = { ...state, apiKey: "" }; // Nooit de API key delen via de link!
+                const shareUrl = `${window.location.origin}${window.location.pathname}?state=${btoa(JSON.stringify(shareState))}`;
                 navigator.clipboard.writeText(shareUrl).then(() => showToast("🔗 Sync-link gekopieerd!")).catch(() => prompt("Kopieer handmatig:", shareUrl));
             } catch (e) { showToast("Fout bij genereren", "error"); }
         }
@@ -325,11 +447,17 @@
             try {
                 let str = text;
                 if (text.includes('state=')) { str = text.split('state=')[1].split('&')[0]; }
-                state = JSON.parse(atob(str));
+                const imported = JSON.parse(atob(str));
                 
+                // Behoud de eigen API-key bij import
+                const currentApiKey = state.apiKey;
+                state = imported;
+                if (!state.apiKey && currentApiKey) state.apiKey = currentApiKey;
                 if (!state.points) state.points = { ...DEFAULT_POINTS };
 
                 saveToLocalStorage(); renderLists(); renderPointsSettings(); calculateScores(); updateFooterPoints(); updateChart();
+                document.getElementById('api-key-input').value = state.apiKey || "";
+                document.getElementById('ai-auto-toggle').checked = state.autoAI || false;
                 showToast("☁️ Data & reglement succesvol geïmporteerd!", "info");
             } catch (e) { showToast("Ongeldige link", "error"); }
         }
@@ -341,7 +469,7 @@
                 
                 container.innerHTML = `
                     <div class="mb-4 bg-slate-900 border border-slate-800 p-2.5 rounded-xl shadow-inner space-y-2">
-                        <div class="text-3xs font-bold uppercase tracking-wider text-slate-400 pl-1">Snelle Updates (Kies je methode):</div>
+                        <div class="text-3xs font-bold uppercase tracking-wider text-slate-400 pl-1">Handmatige Updates:</div>
                         <div class="grid grid-cols-2 gap-2">
                             <button onclick="importClassOrder('${cat}')" class="bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/20 text-3xs font-bold py-2.5 rounded-lg transition-colors">
                                 ⚡ Snel-volgorde
@@ -444,6 +572,13 @@
             calculateScores(); 
             updateFooterPoints();
             updateChart();
+
+            // Herstel API invoervelden uit de state
+            if (state.apiKey) document.getElementById('api-key-input').value = state.apiKey;
+            if (state.autoAI) {
+                document.getElementById('ai-auto-toggle').checked = true;
+                aiInterval = setInterval(fetchLiveStandingsWithAI, 5 * 60 * 1000);
+            }
         };
     </script>
 </body>
