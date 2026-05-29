@@ -2,9 +2,14 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Mans 24h Live Pool 2026 - PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontSize: { '2xs': '0.65rem', '3xs': '0.6rem' } } }
+        };
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { -webkit-tap-highlight-color: transparent; }
@@ -15,10 +20,15 @@
         .toast-animate { animation: slideUp 0.3s ease-out forwards; }
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
+        .pos-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.35rem center;
+            background-size: 0.7rem;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen pb-32 selection:bg-blue-500/30">
-
     <!-- Header -->
     <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/80 border-b border-slate-800 shadow-xl">
         <div class="bg-gradient-to-r from-red-700 via-slate-900 to-blue-700 h-1 w-full"></div>
@@ -26,7 +36,6 @@
             <h1 class="text-xl font-black tracking-wider uppercase text-white drop-shadow-md">🏎️ Le Mans Pool</h1>
             <div class="text-2xs text-slate-400 mt-0.5 font-semibold tracking-widest uppercase">Jasper 🆚 Wilfried | 2026 Pro</div>
         </div>
-
         <!-- Scoreboard -->
         <div class="grid grid-cols-2 text-center pb-3 pt-1">
             <div class="border-r border-slate-700/50">
@@ -38,7 +47,6 @@
                 <div id="score-wilfried" class="text-3xl font-black mt-1 text-slate-100 transition-all duration-300">0</div>
             </div>
         </div>
-        
         <!-- Tabs -->
         <div class="flex space-x-1 px-3 pb-3 overflow-x-auto">
             <button onclick="switchTab('dash')" id="tab-dash" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg bg-slate-800 text-white shadow-inner transition-colors min-w-[65px]">📊 Dash</button>
@@ -48,29 +56,22 @@
             <button onclick="switchTab('lmgt3')" id="tab-lmgt3" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[65px]">LMGT3</button>
         </div>
     </header>
-
     <div class="p-4 max-w-md mx-auto">
-        
         <!-- TAB: DASHBOARD -->
         <div id="panel-dash" class="space-y-5">
-            
             <!-- Control Center -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg relative overflow-hidden">
                 <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Control Center</h3>
-                
                 <div class="grid grid-cols-2 gap-3 mb-3">
                     <button onclick="triggerLottery()" class="bg-gradient-to-br from-amber-500 to-amber-700 text-white font-bold py-3.5 px-3 rounded-xl text-xs shadow-md active:scale-95 transition-all">🎲 Start Loting</button>
                     <button onclick="saveCurrentHour()" class="bg-gradient-to-br from-emerald-500 to-emerald-700 text-white font-bold py-3.5 px-3 rounded-xl text-xs shadow-md active:scale-95 transition-all">📈 Sla Uur Op</button>
                 </div>
-
                 <div class="grid grid-cols-2 gap-3 mb-3">
                     <button onclick="generateShareLink()" class="w-full bg-slate-800 border border-slate-700 text-white font-bold py-3 px-2 rounded-xl text-xs shadow-md flex items-center justify-center active:scale-95 transition-all">🔗 Kopieer Link</button>
                     <button onclick="importSyncLink()" class="w-full bg-slate-800 border border-slate-700 text-white font-bold py-3 px-2 rounded-xl text-xs shadow-md flex items-center justify-center active:scale-95 transition-all">📥 Plak Link</button>
                 </div>
-
                 <button onclick="resetAll()" class="w-full bg-slate-950/50 border border-red-900/30 text-red-400/70 py-2.5 rounded-xl text-2xs uppercase tracking-wider hover:text-red-400 transition-colors">Systeem Reset</button>
             </div>
-
             <!-- Puntentelling Aanpassen -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
                 <details class="group cursor-pointer">
@@ -81,7 +82,6 @@
                     <div class="grid grid-cols-5 gap-2 mt-4 text-center" id="points-inputs-container"></div>
                 </details>
             </div>
-
             <!-- Live Chart -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
                 <div class="flex justify-between items-end mb-4">
@@ -93,22 +93,17 @@
                 </div>
             </div>
         </div>
-
         <!-- TABS VOOR DE KLASSEN -->
         <div id="panel-hyper" class="hidden space-y-3 pb-6"></div>
         <div id="panel-lmp2" class="hidden space-y-3 pb-6"></div>
         <div id="panel-lmp2am" class="hidden space-y-3 pb-6"></div>
         <div id="panel-lmgt3" class="hidden space-y-3 pb-6"></div>
-
     </div>
-
     <!-- Footer -->
     <div class="fixed bottom-0 left-0 w-full backdrop-blur-md bg-slate-950/90 border-t border-slate-800 p-3.5 z-30 shadow-2xl">
         <div id="footer-points" class="flex justify-between items-center max-w-md mx-auto text-3xs text-slate-500 font-mono overflow-x-auto whitespace-nowrap space-x-3 px-1"></div>
     </div>
-
     <div id="toast-container" class="fixed bottom-16 left-0 right-0 z-50 flex flex-col items-center space-y-2 px-4 pointer-events-none"></div>
-
     <script>
         const TEAMS = {
             hyper: [
@@ -124,27 +119,27 @@
                 { id: 'h10', name: 'Alpine Endurance #35', car: 'Alpine A424', num: '35', drivers: [{n:'P. Chatin', cc:'fr'}, {n:'F. Habsburg', cc:'at'}, {n:'C. Milesi', cc:'fr'}] }
             ],
             lmp2: [
-                { id: 'l1', name: 'Inter Europol #43', car: 'Oreca 07', num: '43', drivers: [{n:'J. Śmiechowski', cc:'pl'}, {n:'V. Lomko', cc:'ru'}, {n:'C. Novalak', cc:'fr'}] }, 
+                { id: 'l1', name: 'Inter Europol #43', car: 'Oreca 07', num: '43', drivers: [{n:'J. Śmiechowski', cc:'pl'}, {n:'V. Lomko', cc:'ru'}, {n:'C. Novalak', cc:'fr'}] },
                 { id: 'l2', name: 'United Autosports #22', car: 'Oreca 07', num: '22', drivers: [{n:'O. Jarvis', cc:'gb'}, {n:'B. Garg', cc:'us'}, {n:'N. Siegel', cc:'us'}] },
-                { id: 'l3', name: 'Duqueine Team #30', car: 'Oreca 07', num: '30', drivers: [{n:'J. Falchero', cc:'fr'}, {n:'J. Allen', cc:'au'}, {n:'C. Cresp', cc:'fr'}] }, 
+                { id: 'l3', name: 'Duqueine Team #30', car: 'Oreca 07', num: '30', drivers: [{n:'J. Falchero', cc:'fr'}, {n:'J. Allen', cc:'au'}, {n:'C. Cresp', cc:'fr'}] },
                 { id: 'l4', name: 'Cool Racing #37', car: 'Oreca 07', num: '37', drivers: [{n:'A. Coigny', cc:'ch'}, {n:'M. Jakobsen', cc:'dk'}, {n:'R. Miyata', cc:'jp'}] },
-                { id: 'l5', name: 'AO by TF #199 ("Spike")', car: 'Oreca 07', num: '199', drivers: [{n:'P. Hyett', cc:'us'}, {n:'L. Delétraz', cc:'ch'}, {n:'A. Quinn', cc:'gb'}] }, 
+                { id: 'l5', name: 'AO by TF #199 ("Spike")', car: 'Oreca 07', num: '199', drivers: [{n:'P. Hyett', cc:'us'}, {n:'L. Delétraz', cc:'ch'}, {n:'A. Quinn', cc:'gb'}] },
                 { id: 'l6', name: 'Vector Sport #10', car: 'Oreca 07', num: '10', drivers: [{n:'R. Cullen', cc:'ie'}, {n:'P. Pilet', cc:'fr'}, {n:'S. Richelmi', cc:'mc'}] },
-                { id: 'l7', name: 'Algarve Pro #25', car: 'Oreca 07', num: '25', drivers: [{n:'O. Caldwell', cc:'gb'}, {n:'M. McMurry', cc:'us'}, {n:'C. Braun', cc:'us'}] }, 
+                { id: 'l7', name: 'Algarve Pro #25', car: 'Oreca 07', num: '25', drivers: [{n:'O. Caldwell', cc:'gb'}, {n:'M. McMurry', cc:'us'}, {n:'C. Braun', cc:'us'}] },
                 { id: 'l8', name: 'Nielsen Racing #24', car: 'Oreca 07', num: '24', drivers: [{n:'F. Scherer', cc:'ch'}, {n:'D. Heinemeier Hansson', cc:'dk'}, {n:'A. Costa', cc:'es'}] },
-                { id: 'l9', name: 'Panis Racing #65', car: 'Oreca 07', num: '65', drivers: [{n:'N. Jamin', cc:'fr'}, {n:'J. van der Helm', cc:'nl'}, {n:'S. Huffaker', cc:'us'}] }, 
+                { id: 'l9', name: 'Panis Racing #65', car: 'Oreca 07', num: '65', drivers: [{n:'N. Jamin', cc:'fr'}, {n:'J. van der Helm', cc:'nl'}, {n:'S. Huffaker', cc:'us'}] },
                 { id: 'l10', name: 'IDEC Sport #28', car: 'Oreca 07', num: '28', drivers: [{n:'P. Lafargue', cc:'fr'}, {n:'R. de Gerus', cc:'fr'}, {n:'J. van Uitert', cc:'nl'}] }
             ],
             lmp2am: [
-                { id: 'la1', name: 'AF Corse #183', car: 'Oreca 07', num: '183', drivers: [{n:'F. Perrodo', cc:'fr'}, {n:'B. Barnicoat', cc:'gb'}, {n:'N. Varrone', cc:'ar'}] }, 
+                { id: 'la1', name: 'AF Corse #183', car: 'Oreca 07', num: '183', drivers: [{n:'F. Perrodo', cc:'fr'}, {n:'B. Barnicoat', cc:'gb'}, {n:'N. Varrone', cc:'ar'}] },
                 { id: 'la2', name: 'CrowdStrike #45', car: 'Oreca 07', num: '45', drivers: [{n:'G. Kurtz', cc:'us'}, {n:'C. Braun', cc:'us'}, {n:'T. Bell', cc:'gb'}] },
-                { id: 'la3', name: 'Proton Competition #9', car: 'Oreca 07', num: '9', drivers: [{n:'C. Ried', cc:'de'}, {n:'G. Bruni', cc:'it'}, {n:'B. Viscaal', cc:'nl'}] }, 
+                { id: 'la3', name: 'Proton Competition #9', car: 'Oreca 07', num: '9', drivers: [{n:'C. Ried', cc:'de'}, {n:'G. Bruni', cc:'it'}, {n:'B. Viscaal', cc:'nl'}] },
                 { id: 'la4', name: 'DKR Engineering #33', car: 'Oreca 07', num: '33', drivers: [{n:'A. Mattschull', cc:'de'}, {n:'L. Hörr', cc:'de'}, {n:'T. Laurent', cc:'fr'}] },
-                { id: 'la5', name: 'Nielsen Light #34', car: 'Oreca 07', num: '34', drivers: [{n:'R. Sales', cc:'us'}, {n:'M. Bell', cc:'gb'}, {n:'B. Hanley', cc:'gb'}] }, 
+                { id: 'la5', name: 'Nielsen Light #34', car: 'Oreca 07', num: '34', drivers: [{n:'R. Sales', cc:'us'}, {n:'M. Bell', cc:'gb'}, {n:'B. Hanley', cc:'gb'}] },
                 { id: 'la6', name: 'United Am #222', car: 'Oreca 07', num: '222', drivers: [{n:'J. Pierson', cc:'us'}, {n:'T. Blomqvist', cc:'gb'}, {n:'P. di Resta', cc:'gb'}] },
-                { id: 'la7', name: 'Cool ProAm #47', car: 'Oreca 07', num: '47', drivers: [{n:'A. Coigny', cc:'ch'}, {n:'N. Lapierre', cc:'fr'}, {n:'R. Miyata', cc:'jp'}] }, 
+                { id: 'la7', name: 'Cool ProAm #47', car: 'Oreca 07', num: '47', drivers: [{n:'A. Coigny', cc:'ch'}, {n:'N. Lapierre', cc:'fr'}, {n:'R. Miyata', cc:'jp'}] },
                 { id: 'la8', name: 'Team Virage #14', car: 'Oreca 07', num: '14', drivers: [{n:'P. Wira', cc:'pl'}, {n:'N. Pino', cc:'cl'}, {n:'N. Panciatici', cc:'fr'}] },
-                { id: 'la9', name: 'Algarve Am #26', car: 'Oreca 07', num: '26', drivers: [{n:'J. Falb', cc:'us'}, {n:'J. Allen', cc:'au'}, {n:'S. Thomas', cc:'us'}] }, 
+                { id: 'la9', name: 'Algarve Am #26', car: 'Oreca 07', num: '26', drivers: [{n:'J. Falb', cc:'us'}, {n:'J. Allen', cc:'au'}, {n:'S. Thomas', cc:'us'}] },
                 { id: 'la10', name: 'ARC Bratislava #44', car: 'Oreca 07', num: '44', drivers: [{n:'M. Konôpka', cc:'sk'}, {n:'B. Beitsma', cc:'nl'}, {n:'M. Winkelhock', cc:'de'}] }
             ],
             lmgt3: [
@@ -160,11 +155,41 @@
                 { id: 'g10', name: 'Iron Dames #85', car: 'Lamborghini Huracán', num: '85', drivers: [{n:'S. Bovy', cc:'be'}, {n:'R. Frey', cc:'ch'}, {n:'M. Gatting', cc:'dk'}] }
             ]
         };
-
         const DEFAULT_POINTS = { 1: 25, 2: 18, 3: 15, 4: 12, 5: 10, 6: 8, 7: 6, 8: 4, 9: 2, 10: 1 };
+        const STORAGE_KEY = 'lemans_pro_state_v5';
         let state = { assignments: {}, positions: {}, history: { Jasper: [], Wilfried: [] }, points: { ...DEFAULT_POINTS } };
         let chart = null;
-
+        // --- Robuuste, Unicode-safe Base64 (voor sync-links) ---
+        function encodeState(obj) {
+            const bytes = new TextEncoder().encode(JSON.stringify(obj));
+            let bin = '';
+            bytes.forEach(b => bin += String.fromCharCode(b));
+            return btoa(bin);
+        }
+        function decodeState(b64) {
+            const bin = atob(b64);
+            const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+            return JSON.parse(new TextDecoder().decode(bytes));
+        }
+        // --- Validatie/sanitatie zodat kapotte of oude data nooit crasht ---
+        function sanitizeState(raw) {
+            raw = (raw && typeof raw === 'object') ? raw : {};
+            const points = {};
+            for (let i = 1; i <= 10; i++) {
+                const v = parseInt(raw.points && raw.points[i], 10);
+                points[i] = Number.isFinite(v) ? v : DEFAULT_POINTS[i];
+            }
+            const hist = (raw.history && typeof raw.history === 'object') ? raw.history : {};
+            return {
+                assignments: (raw.assignments && typeof raw.assignments === 'object') ? raw.assignments : {},
+                positions: (raw.positions && typeof raw.positions === 'object') ? raw.positions : {},
+                history: {
+                    Jasper: Array.isArray(hist.Jasper) ? hist.Jasper.map(Number) : [],
+                    Wilfried: Array.isArray(hist.Wilfried) ? hist.Wilfried.map(Number) : []
+                },
+                points: points
+            };
+        }
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -174,16 +199,19 @@
             container.appendChild(toast);
             setTimeout(() => { toast.remove(); }, 3500);
         }
-
         function switchTab(tabId) {
             ['dash', 'hyper', 'lmp2', 'lmp2am', 'lmgt3'].forEach(id => {
-                document.getElementById(`panel-${id}`).classList.add('hidden');
-                document.getElementById(`tab-${id}`).className = 'flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-slate-400 min-w-[65px]';
+                const panel = document.getElementById(`panel-${id}`);
+                const tab = document.getElementById(`tab-${id}`);
+                const active = id === tabId;
+                panel.classList.toggle('hidden', !active);
+                tab.classList.toggle('bg-slate-800', active);
+                tab.classList.toggle('text-white', active);
+                tab.classList.toggle('shadow-inner', active);
+                tab.classList.toggle('text-slate-400', !active);
+                tab.classList.toggle('hover:bg-slate-800/50', !active);
             });
-            document.getElementById(`panel-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).className = 'flex-1 text-center py-2.5 text-xs font-bold rounded-lg bg-slate-800 text-white shadow-inner min-w-[65px]';
         }
-
         function triggerLottery() {
             if (Object.keys(state.assignments).length > 0 && !confirm("Opnieuw loten? Huidige teams gaan verloren.")) return;
             state.assignments = {};
@@ -203,7 +231,6 @@
             saveToLocalStorage(); renderLists(); calculateScores(); updateChart();
             showToast("🎲 Loting voltooid! Exact 50/50 verdeeld.");
         }
-
         function calculateScores() {
             let j = 0; let w = 0;
             Object.keys(state.positions).forEach(id => {
@@ -216,31 +243,28 @@
             document.getElementById('score-wilfried').innerText = w;
             return { Jasper: j, Wilfried: w };
         }
-
         function updatePosition(id, val) {
             state.positions[id] = val;
             saveToLocalStorage(); calculateScores(); applySelectStyling(id, val);
         }
-
         function renderPointsSettings() {
             const container = document.getElementById('points-inputs-container');
             if (!container) return;
-            container.innerHTML = '';
+            let html = '';
             for (let i = 1; i <= 10; i++) {
-                container.innerHTML += `
+                html += `
                     <div class="bg-slate-950/60 p-1.5 rounded-lg border border-slate-800/60">
                         <div class="text-3xs text-slate-500 font-bold mb-0.5">P${i}</div>
                         <input type="number" value="${state.points[i]}" oninput="updatePointValue(${i}, this.value)" class="w-full bg-slate-900 border border-slate-700 rounded text-center text-xs font-black text-white outline-none focus:border-purple-500 py-1 px-0.5">
                     </div>
                 `;
             }
+            container.innerHTML = html;
         }
-
         function updatePointValue(pos, val) {
             state.points[pos] = parseInt(val) || 0;
             saveToLocalStorage(); calculateScores(); updateFooterPoints();
         }
-
         function updateFooterPoints() {
             const footer = document.getElementById('footer-points');
             if (!footer) return;
@@ -248,7 +272,6 @@
                 .map(p => `<span>P${p}:<strong class="text-slate-300">${state.points[p]}</strong></span>`)
                 .join('');
         }
-
         function importClassOrder(cat) {
             const input = prompt(`Voer de autonummers in (gescheiden door spaties):\nBijv: 7 50 15 8`);
             if (!input) return;
@@ -256,11 +279,9 @@
             if (!numbers) return;
             processNumbersToPositions(cat, numbers);
         }
-
         function scrapeFromWebsiteText(cat) {
             const input = prompt(`Kopieer ALLE tekst van de live timing site en plak het hier:`);
             if (!input) return;
-
             let foundTeams = [];
             TEAMS[cat].forEach(team => {
                 const regex = new RegExp('(?:#|\\b)' + team.num + '\\b');
@@ -269,13 +290,11 @@
                     foundTeams.push({ id: team.id, index: match.index });
                 }
             });
-
             foundTeams.sort((a, b) => a.index - b.index);
             const orderedNumbers = foundTeams.map(f => TEAMS[cat].find(t => t.id === f.id).num);
             processNumbersToPositions(cat, orderedNumbers);
-            showToast(`🤖 Tekst verwerkt voor ${cat.toUpperCase()}!`);
+            showToast(`🤖 Tekst verwerkt voor ${cat.toUpperCase()}! Controleer de volgorde.`);
         }
-
         function processNumbersToPositions(cat, numbers) {
             TEAMS[cat].forEach(team => { state.positions[team.id] = '-'; });
             let rank = 1;
@@ -288,18 +307,16 @@
             });
             saveToLocalStorage(); renderLists(); calculateScores(); updateChart();
         }
-
         function applySelectStyling(id, val) {
             const el = document.getElementById(`select-${id}`);
             if (!el) return;
-            el.className = "bg-slate-900 border appearance-none outline-none rounded-xl py-2.5 px-1 text-xs font-bold w-16 text-center transition-colors shadow-inner min-h-[40px]";
+            el.className = "pos-select bg-slate-900 border appearance-none outline-none rounded-xl py-2.5 pl-2 pr-5 text-xs font-bold w-16 text-center transition-colors shadow-inner min-h-[40px]";
             if (val == '1') el.classList.add('border-amber-400', 'text-amber-400', 'bg-amber-950/30');
             else if (val == '2') el.classList.add('border-slate-300', 'text-slate-300', 'bg-slate-800');
             else if (val == '3') el.classList.add('border-amber-700', 'text-amber-600', 'bg-amber-900/20');
             else if (val == 'DNF') el.classList.add('border-red-600', 'text-red-500', 'bg-red-950/30');
             else el.classList.add('border-slate-700', 'text-slate-100');
         }
-
         function saveCurrentHour() {
             if (state.history.Jasper.length >= 24) { showToast("Alle 24 uur zijn al gevuld!", "error"); return; }
             let current = calculateScores();
@@ -307,43 +324,39 @@
             saveToLocalStorage(); updateChart();
             showToast(`📈 Uur ${state.history.Jasper.length} opgeslagen!`);
         }
-
-        function saveToLocalStorage() { localStorage.setItem('lemans_pro_state_v5', JSON.stringify(state)); }
-
-        function resetAll() {
-            if (confirm("⚠️ Alles wissen?")) { localStorage.removeItem('lemans_pro_state_v5'); window.location.href = window.location.pathname; }
+        function saveToLocalStorage() {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+            catch (e) { showToast("Opslaan mislukt (opslag vol?)", "error"); }
         }
-
+        function resetAll() {
+            if (confirm("⚠️ Alles wissen?")) { localStorage.removeItem(STORAGE_KEY); window.location.href = window.location.pathname; }
+        }
         function generateShareLink() {
             try {
-                const shareState = { ...state }; 
-                const shareUrl = `${window.location.origin}${window.location.pathname}?state=${btoa(JSON.stringify(shareState))}`;
-                navigator.clipboard.writeText(shareUrl).then(() => showToast("🔗 Sync-link gekopieerd!")).catch(() => prompt("Kopieer handmatig:", shareUrl));
+                const encoded = encodeURIComponent(encodeState(state));
+                const shareUrl = `${window.location.origin}${window.location.pathname}?state=${encoded}`;
+                navigator.clipboard.writeText(shareUrl)
+                    .then(() => showToast("🔗 Sync-link gekopieerd!"))
+                    .catch(() => prompt("Kopieer handmatig:", shareUrl));
             } catch (e) { showToast("Fout bij genereren", "error"); }
         }
-
         function importSyncLink() {
             const text = prompt("Plak hier de Sync-Link:");
             if (!text) return;
             try {
-                let str = text;
-                if (text.includes('state=')) { str = text.split('state=')[1].split('&')[0]; }
-                const imported = JSON.parse(atob(str));
-                
-                state = imported;
-                if (!state.points) state.points = { ...DEFAULT_POINTS };
-
+                let str = text.trim();
+                if (str.includes('state=')) { str = str.split('state=')[1].split('&')[0]; }
+                try { str = decodeURIComponent(str); } catch (e) { /* al gedecodeerd */ }
+                state = sanitizeState(decodeState(str));
                 saveToLocalStorage(); renderLists(); renderPointsSettings(); calculateScores(); updateFooterPoints(); updateChart();
                 showToast("☁️ Data & reglement succesvol geïmporteerd!", "info");
             } catch (e) { showToast("Ongeldige link", "error"); }
         }
-
         function renderLists() {
             const categories = { hyper: 'panel-hyper', lmp2: 'panel-lmp2', lmp2am: 'panel-lmp2am', lmgt3: 'panel-lmgt3' };
             Object.keys(categories).forEach(cat => {
                 const container = document.getElementById(categories[cat]);
-                
-                container.innerHTML = `
+                let html = `
                     <div class="mb-4 bg-slate-900 border border-slate-800 p-2.5 rounded-xl shadow-inner space-y-2">
                         <div class="text-3xs font-bold uppercase tracking-wider text-slate-400 pl-1">Handmatige Updates:</div>
                         <div class="grid grid-cols-2 gap-2">
@@ -356,18 +369,15 @@
                         </div>
                     </div>
                 `;
-
                 TEAMS[cat].forEach(team => {
                     const owner = state.assignments[team.id];
                     const currentPos = state.positions[team.id] || '-';
                     let ownerHtml = `<span class="text-3xs px-2 py-1 rounded-md font-bold bg-slate-800 text-slate-500 border border-slate-700">Niet geloot</span>`;
                     if (owner === 'Jasper') ownerHtml = `<span class="text-3xs px-2 py-1 rounded-md font-black bg-blue-900/40 text-blue-400 border border-blue-800/50">JASPER</span>`;
                     if (owner === 'Wilfried') ownerHtml = `<span class="text-3xs px-2 py-1 rounded-md font-black bg-red-900/40 text-red-400 border border-red-800/50">WILFRIED</span>`;
-
                     let optionsHtml = `<option value="-">-</option>`;
                     for (let i = 1; i <= 10; i++) optionsHtml += `<option value="${i}" ${currentPos == i ? 'selected' : ''}>P${i}</option>`;
                     optionsHtml += `<option value="DNF" ${currentPos === 'DNF' ? 'selected' : ''}>DNF</option>`;
-
                     let driversHtml = team.drivers.map(d => `
                         <div class="flex items-center space-x-2 py-0.5">
                             <img src="https://flagcdn.com/16x12/${d.cc}.png" alt="${d.cc}" class="w-4 h-3 rounded-[2px] shadow-sm bg-slate-800 object-cover" loading="lazy">
@@ -375,15 +385,13 @@
                             <span class="text-slate-300 font-medium">${d.n}</span>
                         </div>
                     `).join('');
-                    
-                    container.innerHTML += `
+                    html += `
                         <div class="flex items-start justify-between bg-slate-900/80 border border-slate-800 rounded-2xl p-3.5 backdrop-blur-sm">
                             <div class="flex-1 pr-3">
                                 <div class="text-sm font-bold text-slate-100 leading-tight">${team.name}</div>
                                 <div class="flex items-center space-x-2 mt-2">
                                     ${ownerHtml} <span class="text-3xs text-slate-500 font-mono">${team.car}</span>
                                 </div>
-                                
                                 <details class="mt-2 group cursor-pointer">
                                     <summary class="text-3xs font-semibold text-slate-500 hover:text-slate-300 flex items-center select-none transition-colors py-1">
                                         <svg class="w-3 h-3 mr-1 transition-transform duration-200 group-open:rotate-90 text-slate-600 group-hover:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
@@ -393,7 +401,6 @@
                                         ${driversHtml}
                                     </div>
                                 </details>
-
                             </div>
                             <div class="pt-0.5">
                                 <select id="select-${team.id}" onchange="updatePosition('${team.id}', this.value)">
@@ -403,49 +410,64 @@
                         </div>
                     `;
                 });
+                container.innerHTML = html;
             });
-            Object.keys(state.positions).forEach(id => applySelectStyling(id, state.positions[id]));
+            Object.keys(TEAMS).forEach(cat => {
+                TEAMS[cat].forEach(team => applySelectStyling(team.id, state.positions[team.id] || '-'));
+            });
         }
-
         function updateChart() {
-            const ctx = document.getElementById('scoreChart').getContext('2d');
             const hrs = state.history.Jasper.length;
+            const labels = Array.from({ length: hrs }, (_, i) => `H${i + 1}`);
             document.getElementById('hour-counter').innerText = `Uur ${hrs}/24`;
             if (chart) {
-                chart.data.labels = Array.from({ length: hrs }, (_, i) => `H${i + 1}`);
-                chart.data.datasets[0].data = state.history.Jasper; chart.data.datasets[1].data = state.history.Wilfried;
+                chart.data.labels = labels;
+                chart.data.datasets[0].data = state.history.Jasper;
+                chart.data.datasets[1].data = state.history.Wilfried;
                 chart.update();
             } else {
+                const ctx = document.getElementById('scoreChart').getContext('2d');
                 chart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: [],
+                        labels: labels,
                         datasets: [
-                            { label: 'Jasper', data: state.history.Jasper, borderColor: '#3b82f6', tension: 0.3, fill: false },
-                            { label: 'Wilfried', data: state.history.Wilfried, borderColor: '#ef4444', tension: 0.3, fill: false }
+                            { label: 'Jasper', data: state.history.Jasper, borderColor: '#3b82f6', backgroundColor: '#3b82f6', tension: 0.3, fill: false },
+                            { label: 'Wilfried', data: state.history.Wilfried, borderColor: '#ef4444', backgroundColor: '#ef4444', tension: 0.3, fill: false }
                         ]
                     },
-                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } },
+                            x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } }
+                        },
+                        plugins: { legend: { labels: { color: '#e2e8f0' } } }
+                    }
                 });
             }
         }
-
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const stateParam = urlParams.get('state');
             if (stateParam) {
-                try { state = JSON.parse(atob(stateParam)); saveToLocalStorage(); window.history.replaceState({}, document.title, window.location.pathname); }
-                catch (e) { showToast("Sync mislukt", "error"); }
+                try {
+                    state = sanitizeState(decodeState(stateParam));
+                    saveToLocalStorage();
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } catch (e) {
+                    showToast("Sync mislukt", "error");
+                    state = sanitizeState(null);
+                }
             } else {
-                const saved = localStorage.getItem('lemans_pro_state_v5');
-                if (saved) state = JSON.parse(saved);
+                let saved = null;
+                try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) { saved = null; }
+                state = sanitizeState(saved);
             }
-            
-            if (!state.points) state.points = { ...DEFAULT_POINTS };
-
-            renderLists(); 
+            renderLists();
             renderPointsSettings();
-            calculateScores(); 
+            calculateScores();
             updateFooterPoints();
             updateChart();
         };
