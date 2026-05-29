@@ -29,14 +29,12 @@
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen pb-32 selection:bg-blue-500/30">
-    <!-- Header -->
     <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/80 border-b border-slate-800 shadow-xl">
         <div class="bg-gradient-to-r from-red-700 via-slate-900 to-blue-700 h-1 w-full"></div>
         <div class="p-3 text-center">
             <h1 class="text-xl font-black tracking-wider uppercase text-white drop-shadow-md">🏎️ Le Mans Pool</h1>
             <div class="text-2xs text-slate-400 mt-0.5 font-semibold tracking-widest uppercase">Jasper 🆚 Wilfried | 2026 Pro</div>
         </div>
-        <!-- Scoreboard -->
         <div class="grid grid-cols-2 text-center pb-3 pt-1">
             <div class="border-r border-slate-700/50">
                 <div class="text-3xs uppercase font-bold text-blue-400 tracking-widest">Team Jasper</div>
@@ -47,7 +45,6 @@
                 <div id="score-wilfried" class="text-3xl font-black mt-1 text-slate-100 transition-all duration-300">0</div>
             </div>
         </div>
-        <!-- Tabs -->
         <div class="flex space-x-1 px-3 pb-3 overflow-x-auto">
             <button onclick="switchTab('dash')" id="tab-dash" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg bg-slate-800 text-white shadow-inner transition-colors min-w-[65px]">📊 Dash</button>
             <button onclick="switchTab('hyper')" id="tab-hyper" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[65px]">Hypercar</button>
@@ -57,9 +54,7 @@
         </div>
     </header>
     <div class="p-4 max-w-md mx-auto">
-        <!-- TAB: DASHBOARD -->
         <div id="panel-dash" class="space-y-5">
-            <!-- Control Center -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg relative overflow-hidden">
                 <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Control Center</h3>
                 <div class="grid grid-cols-2 gap-3 mb-3">
@@ -72,7 +67,6 @@
                 </div>
                 <button onclick="resetAll()" class="w-full bg-slate-950/50 border border-red-900/30 text-red-400/70 py-2.5 rounded-xl text-2xs uppercase tracking-wider hover:text-red-400 transition-colors">Systeem Reset</button>
             </div>
-            <!-- Puntentelling Aanpassen -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
                 <details class="group cursor-pointer">
                     <summary class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center select-none py-1">
@@ -82,7 +76,6 @@
                     <div class="grid grid-cols-5 gap-2 mt-4 text-center" id="points-inputs-container"></div>
                 </details>
             </div>
-            <!-- Live Chart -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
                 <div class="flex justify-between items-end mb-4">
                     <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Live Grafiek</h3>
@@ -93,17 +86,16 @@
                 </div>
             </div>
         </div>
-        <!-- TABS VOOR DE KLASSEN -->
         <div id="panel-hyper" class="hidden space-y-3 pb-6"></div>
         <div id="panel-lmp2" class="hidden space-y-3 pb-6"></div>
         <div id="panel-lmp2am" class="hidden space-y-3 pb-6"></div>
         <div id="panel-lmgt3" class="hidden space-y-3 pb-6"></div>
     </div>
-    <!-- Footer -->
     <div class="fixed bottom-0 left-0 w-full backdrop-blur-md bg-slate-950/90 border-t border-slate-800 p-3.5 z-30 shadow-2xl">
         <div id="footer-points" class="flex justify-between items-center max-w-md mx-auto text-3xs text-slate-500 font-mono overflow-x-auto whitespace-nowrap space-x-3 px-1"></div>
     </div>
     <div id="toast-container" class="fixed bottom-16 left-0 right-0 z-50 flex flex-col items-center space-y-2 px-4 pointer-events-none"></div>
+
     <script>
         const TEAMS = {
             hyper: [
@@ -116,7 +108,7 @@
                 { id: 'h7', name: 'Genesis Magma #17', car: 'Genesis Hypercar', num: '17', drivers: [{n:'D. Sordo', cc:'es'}, {n:'C. Abiteboul', cc:'fr'}, {n:'W. Stevens', cc:'gb'}] },
                 { id: 'h8', name: 'Genesis Magma #19', car: 'Genesis Hypercar', num: '19', drivers: [{n:'N. Nato', cc:'fr'}, {n:'N. Jani', cc:'ch'}, {n:'K. Magnussen', cc:'dk'}] },
                 { id: 'h9', name: 'Cadillac Jota #12', car: 'Cadillac V-Series.R', num: '12', drivers: [{n:'C. Ilott', cc:'gb'}, {n:'A. Lynn', cc:'gb'}, {n:'E. Bamber', cc:'nz'}] },
-                { id: 'h10', name: 'Alpine Endurance #35', car: 'Alpine A424', num: '35', drivers: [{n:'P. Chatin', cc:'fr'}, {n:'F. Habsburg', cc:'at'}, {n:'C. Milesi', cc:'fr'}] }
+                { id: 'h10', name: 'Aston Martin Thor #007', car: 'Valkyrie AMR-LMH', num: '007', drivers: [{n:'H. Tincknell', cc:'gb'}, {n:'A. Riberas', cc:'es'}, {n:'M. Jensen', cc:'dk'}] }
             ],
             lmp2: [
                 { id: 'l1', name: 'Inter Europol #43', car: 'Oreca 07', num: '43', drivers: [{n:'J. Śmiechowski', cc:'pl'}, {n:'V. Lomko', cc:'ru'}, {n:'C. Novalak', cc:'fr'}] },
@@ -152,26 +144,43 @@
                 { id: 'g7', name: 'Proton #77', car: 'Ford Mustang GT3', num: '77', drivers: [{n:'R. Hardwick', cc:'us'}, {n:'Z. Robichon', cc:'ca'}, {n:'B. Barker', cc:'gb'}] },
                 { id: 'g8', name: 'Heart of Racing #27', car: 'Aston Martin GT3', num: '27', drivers: [{n:'I. James', cc:'us'}, {n:'D. Mancinelli', cc:'it'}, {n:'A. Riberas', cc:'es'}] },
                 { id: 'g9', name: 'Akkodis ASP #87', car: 'Lexus RC F GT3', num: '87', drivers: [{n:'T. Kimura', cc:'jp'}, {n:'M. Masson', cc:'fr'}, {n:'J. López', cc:'ar'}] },
-                { id: 'g10', name: 'Iron Dames #85', car: 'Lamborghini Huracán', num: '85', drivers: [{n:'S. Bovy', cc:'be'}, {n:'R. Frey', cc:'ch'}, {n:'M. Gatting', cc:'dk'}] }
+                { id: 'g10', name: 'Manthey EMA #91', car: 'Porsche 911 GT3 R', num: '91', drivers: [{n:'R. Lietz', cc:'at'}, {n:'M. Schuring', cc:'nl'}, {n:'Y. Shahin', cc:'au'}] }
             ]
         };
         const DEFAULT_POINTS = { 1: 25, 2: 18, 3: 15, 4: 12, 5: 10, 6: 8, 7: 6, 8: 4, 9: 2, 10: 1 };
-        const STORAGE_KEY = 'lemans_pro_state_v5';
-        let state = { assignments: {}, positions: {}, history: { Jasper: [], Wilfried: [] }, points: { ...DEFAULT_POINTS } };
+        const STORAGE_KEY = 'lemans_pro_state_v6';
+        const JOKER_DEADLINE = new Date("2026-06-13T15:59:00+02:00"); // Strikte deadline (Parijs tijdstip)
+
+        let state = { 
+            assignments: {}, 
+            positions: {}, 
+            jokers: { Jasper: { hyper:'', lmp2:'', lmp2am:'', lmgt3:'' }, Wilfried: { hyper:'', lmp2:'', lmp2am:'', lmgt3:'' } },
+            history: { Jasper: [], Wilfried: [] }, 
+            points: { ...DEFAULT_POINTS } 
+        };
         let chart = null;
-        // --- Robuuste, Unicode-safe Base64 (voor sync-links) ---
+
+        function getCategoryById(id) {
+            if (id.startsWith('h')) return 'hyper';
+            if (id.startsWith('la')) return 'lmp2am';
+            if (id.startsWith('l')) return 'lmp2';
+            if (id.startsWith('g')) return 'lmgt3';
+            return '';
+        }
+
         function encodeState(obj) {
             const bytes = new TextEncoder().encode(JSON.stringify(obj));
             let bin = '';
             bytes.forEach(b => bin += String.fromCharCode(b));
             return btoa(bin);
         }
+
         function decodeState(b64) {
             const bin = atob(b64);
             const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
             return JSON.parse(new TextDecoder().decode(bytes));
         }
-        // --- Validatie/sanitatie zodat kapotte of oude data nooit crasht ---
+
         function sanitizeState(raw) {
             raw = (raw && typeof raw === 'object') ? raw : {};
             const points = {};
@@ -180,9 +189,14 @@
                 points[i] = Number.isFinite(v) ? v : DEFAULT_POINTS[i];
             }
             const hist = (raw.history && typeof raw.history === 'object') ? raw.history : {};
+            const jokers = (raw.jokers && typeof raw.jokers === 'object') ? raw.jokers : {};
             return {
                 assignments: (raw.assignments && typeof raw.assignments === 'object') ? raw.assignments : {},
                 positions: (raw.positions && typeof raw.positions === 'object') ? raw.positions : {},
+                jokers: {
+                    Jasper: { hyper:'', lmp2:'', lmp2am:'', lmgt3:'', ...(jokers.Jasper || {}) },
+                    Wilfried: { hyper:'', lmp2:'', lmp2am:'', lmgt3:'', ...(jokers.Wilfried || {}) }
+                },
                 history: {
                     Jasper: Array.isArray(hist.Jasper) ? hist.Jasper.map(Number) : [],
                     Wilfried: Array.isArray(hist.Wilfried) ? hist.Wilfried.map(Number) : []
@@ -190,6 +204,7 @@
                 points: points
             };
         }
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -199,6 +214,7 @@
             container.appendChild(toast);
             setTimeout(() => { toast.remove(); }, 3500);
         }
+
         function switchTab(tabId) {
             ['dash', 'hyper', 'lmp2', 'lmp2am', 'lmgt3'].forEach(id => {
                 const panel = document.getElementById(`panel-${id}`);
@@ -212,9 +228,12 @@
                 tab.classList.toggle('hover:bg-slate-800/50', !active);
             });
         }
+
         function triggerLottery() {
-            if (Object.keys(state.assignments).length > 0 && !confirm("Opnieuw loten? Huidige teams gaan verloren.")) return;
+            if (Object.keys(state.assignments).length > 0 && !confirm("Opnieuw loten? Huidige teams en jokers gaan verloren.")) return;
             state.assignments = {};
+            state.jokers = { Jasper: { hyper:'', lmp2:'', lmp2am:'', lmgt3:'' }, Wilfried: { hyper:'', lmp2:'', lmp2am:'', lmgt3:'' } };
+            
             Object.keys(TEAMS).forEach(cat => {
                 let pool = [...TEAMS[cat]];
                 let jC = 0; let wC = 0;
@@ -231,22 +250,44 @@
             saveToLocalStorage(); renderLists(); calculateScores(); updateChart();
             showToast("🎲 Loting voltooid! Exact 50/50 verdeeld.");
         }
+
         function calculateScores() {
             let j = 0; let w = 0;
             Object.keys(state.positions).forEach(id => {
                 let pos = state.positions[id];
                 let pnt = state.points[pos] || 0;
-                if (state.assignments[id] === 'Jasper') j += pnt;
-                if (state.assignments[id] === 'Wilfried') w += pnt;
+                let cat = getCategoryById(id);
+                
+                if (state.assignments[id] === 'Jasper') {
+                    let mult = (state.jokers.Jasper[cat] === id) ? 2 : 1;
+                    j += (pnt * mult);
+                }
+                if (state.assignments[id] === 'Wilfried') {
+                    let mult = (state.jokers.Wilfried[cat] === id) ? 2 : 1;
+                    w += (pnt * mult);
+                }
             });
             document.getElementById('score-jasper').innerText = j;
             document.getElementById('score-wilfried').innerText = w;
             return { Jasper: j, Wilfried: w };
         }
+
+        function updateJoker(player, cat, teamId) {
+            if (new Date() >= JOKER_DEADLINE) {
+                showToast("🔒 De deadline is verstreken! Jokers zijn bevroren.", "error");
+                renderLists();
+                return;
+            }
+            state.jokers[player][cat] = teamId;
+            saveToLocalStorage(); calculateScores(); renderLists(); updateChart();
+            showToast(`🃏 Joker voor ${player} bijgewerkt!`);
+        }
+
         function updatePosition(id, val) {
             state.positions[id] = val;
             saveToLocalStorage(); calculateScores(); applySelectStyling(id, val);
         }
+
         function renderPointsSettings() {
             const container = document.getElementById('points-inputs-container');
             if (!container) return;
@@ -261,10 +302,12 @@
             }
             container.innerHTML = html;
         }
+
         function updatePointValue(pos, val) {
             state.points[pos] = parseInt(val) || 0;
             saveToLocalStorage(); calculateScores(); updateFooterPoints();
         }
+
         function updateFooterPoints() {
             const footer = document.getElementById('footer-points');
             if (!footer) return;
@@ -272,6 +315,7 @@
                 .map(p => `<span>P${p}:<strong class="text-slate-300">${state.points[p]}</strong></span>`)
                 .join('');
         }
+
         function importClassOrder(cat) {
             const input = prompt(`Voer de autonummers in (gescheiden door spaties):\nBijv: 7 50 15 8`);
             if (!input) return;
@@ -279,6 +323,7 @@
             if (!numbers) return;
             processNumbersToPositions(cat, numbers);
         }
+
         function scrapeFromWebsiteText(cat) {
             const input = prompt(`Kopieer ALLE tekst van de live timing site en plak het hier:`);
             if (!input) return;
@@ -295,6 +340,7 @@
             processNumbersToPositions(cat, orderedNumbers);
             showToast(`🤖 Tekst verwerkt voor ${cat.toUpperCase()}! Controleer de volgorde.`);
         }
+
         function processNumbersToPositions(cat, numbers) {
             TEAMS[cat].forEach(team => { state.positions[team.id] = '-'; });
             let rank = 1;
@@ -307,6 +353,7 @@
             });
             saveToLocalStorage(); renderLists(); calculateScores(); updateChart();
         }
+
         function applySelectStyling(id, val) {
             const el = document.getElementById(`select-${id}`);
             if (!el) return;
@@ -317,6 +364,7 @@
             else if (val == 'DNF') el.classList.add('border-red-600', 'text-red-500', 'bg-red-950/30');
             else el.classList.add('border-slate-700', 'text-slate-100');
         }
+
         function saveCurrentHour() {
             if (state.history.Jasper.length >= 24) { showToast("Alle 24 uur zijn al gevuld!", "error"); return; }
             let current = calculateScores();
@@ -324,13 +372,16 @@
             saveToLocalStorage(); updateChart();
             showToast(`📈 Uur ${state.history.Jasper.length} opgeslagen!`);
         }
+
         function saveToLocalStorage() {
             try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
             catch (e) { showToast("Opslaan mislukt (opslag vol?)", "error"); }
         }
+
         function resetAll() {
             if (confirm("⚠️ Alles wissen?")) { localStorage.removeItem(STORAGE_KEY); window.location.href = window.location.pathname; }
         }
+
         function generateShareLink() {
             try {
                 const encoded = encodeURIComponent(encodeState(state));
@@ -340,6 +391,7 @@
                     .catch(() => prompt("Kopieer handmatig:", shareUrl));
             } catch (e) { showToast("Fout bij genereren", "error"); }
         }
+
         function importSyncLink() {
             const text = prompt("Plak hier de Sync-Link:");
             if (!text) return;
@@ -352,12 +404,19 @@
                 showToast("☁️ Data & reglement succesvol geïmporteerd!", "info");
             } catch (e) { showToast("Ongeldige link", "error"); }
         }
+
         function renderLists() {
             const categories = { hyper: 'panel-hyper', lmp2: 'panel-lmp2', lmp2am: 'panel-lmp2am', lmgt3: 'panel-lmgt3' };
+            const now = new Date();
+            const deadlinePassed = now >= JOKER_DEADLINE;
+            const canChangeJoker = !deadlinePassed && Object.keys(state.assignments).length > 0;
+
             Object.keys(categories).forEach(cat => {
                 const container = document.getElementById(categories[cat]);
+                
+                // Basis Utilities box
                 let html = `
-                    <div class="mb-4 bg-slate-900 border border-slate-800 p-2.5 rounded-xl shadow-inner space-y-2">
+                    <div class="mb-3 bg-slate-900 border border-slate-800 p-2.5 rounded-xl shadow-inner space-y-2">
                         <div class="text-3xs font-bold uppercase tracking-wider text-slate-400 pl-1">Handmatige Updates:</div>
                         <div class="grid grid-cols-2 gap-2">
                             <button onclick="importClassOrder('${cat}')" class="bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/20 text-3xs font-bold py-2.5 rounded-lg transition-colors">
@@ -369,15 +428,56 @@
                         </div>
                     </div>
                 `;
+
+                // Nieuwe Joker Selectie Box (alleen tonen na de loting)
+                if (Object.keys(state.assignments).length > 0) {
+                    const jasperPool = TEAMS[cat].filter(t => state.assignments[t.id] === 'Jasper');
+                    const wilfriedPool = TEAMS[cat].filter(t => state.assignments[t.id] === 'Wilfried');
+
+                    let jOpts = `<option value="">-- Geen Joker --</option>` + jasperPool.map(t => `<option value="${t.id}" ${state.jokers.Jasper[cat] === t.id ? 'selected' : ''}>#${t.num} ${t.name.split('#')[0].trim()}</option>`).join('');
+                    let wOpts = `<option value="">-- Geen Joker --</option>` + wilfriedPool.map(t => `<option value="${t.id}" ${state.jokers.Wilfried[cat] === t.id ? 'selected' : ''}>#${t.num} ${t.name.split('#')[0].trim()}</option>`).join('');
+
+                    html += `
+                        <div class="mb-3 bg-slate-900 border border-slate-800 p-2.5 rounded-xl shadow-inner space-y-2">
+                            <div class="text-3xs font-bold uppercase tracking-wider text-slate-400 flex justify-between items-center pl-1">
+                                <span>🃏 Joker Per Categorie (Pnt x2):</span>
+                                <span class="${deadlinePassed ? 'text-red-500' : 'text-amber-500'} font-mono">${deadlinePassed ? '🔒 Gesloten' : '⏳ Tot 13 jun 15:59'}</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <div class="text-[9px] text-blue-400 font-bold mb-0.5">Jasper:</div>
+                                    <select onchange="updateJoker('Jasper', '${cat}', this.value)" ${!canChangeJoker ? 'disabled' : ''} class="w-full bg-slate-950 border border-slate-700/60 rounded px-1 py-1 text-white outline-none text-3xs font-bold ${!canChangeJoker ? 'opacity-50 cursor-not-allowed' : ''}">
+                                        ${jOpts}
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="text-[9px] text-red-400 font-bold mb-0.5">Wilfried:</div>
+                                    <select onchange="updateJoker('Wilfried', '${cat}', this.value)" ${!canChangeJoker ? 'disabled' : ''} class="w-full bg-slate-950 border border-slate-700/60 rounded px-1 py-1 text-white outline-none text-3xs font-bold ${!canChangeJoker ? 'opacity-50 cursor-not-allowed' : ''}">
+                                        ${wOpts}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Renderen van de Teams
                 TEAMS[cat].forEach(team => {
                     const owner = state.assignments[team.id];
                     const currentPos = state.positions[team.id] || '-';
+                    
                     let ownerHtml = `<span class="text-3xs px-2 py-1 rounded-md font-bold bg-slate-800 text-slate-500 border border-slate-700">Niet geloot</span>`;
                     if (owner === 'Jasper') ownerHtml = `<span class="text-3xs px-2 py-1 rounded-md font-black bg-blue-900/40 text-blue-400 border border-blue-800/50">JASPER</span>`;
                     if (owner === 'Wilfried') ownerHtml = `<span class="text-3xs px-2 py-1 rounded-md font-black bg-red-900/40 text-red-400 border border-red-800/50">WILFRIED</span>`;
+                    
+                    // Is dit team aangewezen als joker?
+                    const isJoker = (owner === 'Jasper' && state.jokers.Jasper[cat] === team.id) || (owner === 'Wilfried' && state.jokers.Wilfried[cat] === team.id);
+                    let jokerBadge = isJoker ? `<span class="text-3xs px-1.5 py-1 rounded-md font-black bg-amber-500/20 text-amber-400 border border-amber-500/40 tracking-wider animate-pulse">🃏 JOKER X2</span>` : '';
+
                     let optionsHtml = `<option value="-">-</option>`;
                     for (let i = 1; i <= 10; i++) optionsHtml += `<option value="${i}" ${currentPos == i ? 'selected' : ''}>P${i}</option>`;
                     optionsHtml += `<option value="DNF" ${currentPos === 'DNF' ? 'selected' : ''}>DNF</option>`;
+                    
                     let driversHtml = team.drivers.map(d => `
                         <div class="flex items-center space-x-2 py-0.5">
                             <img src="https://flagcdn.com/16x12/${d.cc}.png" alt="${d.cc}" class="w-4 h-3 rounded-[2px] shadow-sm bg-slate-800 object-cover" loading="lazy">
@@ -385,12 +485,13 @@
                             <span class="text-slate-300 font-medium">${d.n}</span>
                         </div>
                     `).join('');
+
                     html += `
                         <div class="flex items-start justify-between bg-slate-900/80 border border-slate-800 rounded-2xl p-3.5 backdrop-blur-sm">
                             <div class="flex-1 pr-3">
                                 <div class="text-sm font-bold text-slate-100 leading-tight">${team.name}</div>
                                 <div class="flex items-center space-x-2 mt-2">
-                                    ${ownerHtml} <span class="text-3xs text-slate-500 font-mono">${team.car}</span>
+                                    ${ownerHtml} ${jokerBadge} <span class="text-3xs text-slate-500 font-mono">${team.car}</span>
                                 </div>
                                 <details class="mt-2 group cursor-pointer">
                                     <summary class="text-3xs font-semibold text-slate-500 hover:text-slate-300 flex items-center select-none transition-colors py-1">
@@ -416,10 +517,12 @@
                 TEAMS[cat].forEach(team => applySelectStyling(team.id, state.positions[team.id] || '-'));
             });
         }
+
         function updateChart() {
             const hrs = state.history.Jasper.length;
             const labels = Array.from({ length: hrs }, (_, i) => `H${i + 1}`);
             document.getElementById('hour-counter').innerText = `Uur ${hrs}/24`;
+            
             if (chart) {
                 chart.data.labels = labels;
                 chart.data.datasets[0].data = state.history.Jasper;
@@ -432,38 +535,51 @@
                     data: {
                         labels: labels,
                         datasets: [
-                            { label: 'Jasper', data: state.history.Jasper, borderColor: '#3b82f6', backgroundColor: '#3b82f6', tension: 0.3, fill: false },
-                            { label: 'Wilfried', data: state.history.Wilfried, borderColor: '#ef4444', backgroundColor: '#ef4444', tension: 0.3, fill: false }
+                            {
+                                label: 'Jasper',
+                                data: state.history.Jasper,
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                borderWidth: 3,
+                                tension: 0.2,
+                                pointRadius: 3
+                            },
+                            {
+                                label: 'Wilfried',
+                                data: state.history.Wilfried,
+                                borderColor: '#ef4444',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                borderWidth: 3,
+                                tension: 0.2,
+                                pointRadius: 3
+                            }
                         ]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
-                            y: { beginAtZero: true, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } },
-                            x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } }
+                            y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+                            x: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
                         },
-                        plugins: { legend: { labels: { color: '#e2e8f0' } } }
+                        plugins: {
+                            legend: { display: false }
+                        }
                     }
                 });
             }
         }
+
+        // Automatische opstart routine bij laden van pagina
         window.onload = function() {
+            const localData = localStorage.getItem(STORAGE_KEY);
+            if (localData) {
+                try { state = sanitizeState(JSON.parse(localData)); } catch(e) {}
+            }
             const urlParams = new URLSearchParams(window.location.search);
             const stateParam = urlParams.get('state');
             if (stateParam) {
-                try {
-                    state = sanitizeState(decodeState(stateParam));
-                    saveToLocalStorage();
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                } catch (e) {
-                    showToast("Sync mislukt", "error");
-                    state = sanitizeState(null);
-                }
-            } else {
-                let saved = null;
-                try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) { saved = null; }
-                state = sanitizeState(saved);
+                try { state = sanitizeState(decodeState(decodeURIComponent(stateParam))); } catch(e) {}
             }
             renderLists();
             renderPointsSettings();
