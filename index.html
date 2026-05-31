@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Mans 24h Live Pool 2026 - PRO</title>
+    <title>Le Mans 24h Live Pool</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -26,31 +26,105 @@
             background-position: right 0.35rem center;
             background-size: 0.7rem;
         }
+        /* ---- Neon styling ---- */
+        @keyframes neonFlicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            94% { opacity: 0.78; }
+            96% { opacity: 1; }
+        }
+        .neon-title {
+            color: #fff;
+            text-shadow:
+                0 0 6px rgba(251,191,36,0.95),
+                0 0 14px rgba(245,158,11,0.8),
+                0 0 30px rgba(249,115,22,0.6),
+                0 0 50px rgba(239,68,68,0.45);
+            animation: neonFlicker 6s infinite;
+        }
+        .neon-blue {
+            text-shadow: 0 0 8px rgba(59,130,246,0.9), 0 0 20px rgba(59,130,246,0.6);
+        }
+        .neon-red {
+            text-shadow: 0 0 8px rgba(239,68,68,0.9), 0 0 20px rgba(239,68,68,0.6);
+        }
+        .neon-amber {
+            text-shadow: 0 0 6px rgba(251,191,36,0.9), 0 0 16px rgba(245,158,11,0.6);
+        }
+        .neon-line {
+            background: linear-gradient(90deg, #ef4444, #f97316, #fbbf24, #3b82f6, #ef4444);
+            background-size: 300% 100%;
+            animation: neonSlide 6s linear infinite;
+            box-shadow: 0 0 12px rgba(249,115,22,0.7);
+        }
+        @keyframes neonSlide {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+        .car-hero {
+            filter: drop-shadow(0 6px 14px rgba(0,0,0,0.6));
+        }
+        .car-hero-wrap {
+            background:
+                radial-gradient(ellipse at 50% 65%, rgba(249,115,22,0.22), rgba(15,23,42,0) 70%);
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen pb-32 selection:bg-blue-500/30">
-    <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/80 border-b border-slate-800 shadow-xl">
-        <div class="bg-gradient-to-r from-red-700 via-slate-900 to-blue-700 h-1 w-full"></div>
-        <div class="p-3 text-center">
-            <h1 class="text-xl font-black tracking-wider uppercase text-white drop-shadow-md">🏎️ Le Mans Pool</h1>
-            <div class="text-2xs text-slate-400 mt-0.5 font-semibold tracking-widest uppercase">Jasper 🆚 Wilfried | 2026 Pro</div>
+    <div class="relative w-full overflow-hidden border-b border-slate-800">
+        <img src="24h_le_mans_banner.png" alt="24h Le Mans" class="w-full h-44 sm:h-52 object-cover object-center">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-transparent to-slate-950/30"></div>
+        <div class="absolute bottom-0 left-0 right-0 px-4 pb-4 text-center">
+            <h1 class="text-3xl sm:text-4xl font-black tracking-widest uppercase neon-title">Le Mans Pool</h1>
+            <div class="text-2xs sm:text-xs text-amber-200/90 mt-1 font-semibold tracking-[0.25em] uppercase neon-amber">Jasper <span class="text-slate-300">🆚</span> Wilfried</div>
         </div>
-        <div class="grid grid-cols-2 text-center pb-3 pt-1">
+    </div>
+    <div class="neon-line h-1 w-full"></div>
+    <div class="px-4 py-3 bg-slate-950/60 border-b border-slate-800">
+        <div id="race-timer" class="max-w-md mx-auto flex flex-col items-center text-center">
+            <div id="race-timer-label" class="text-3xs uppercase font-bold tracking-[0.3em] text-slate-400 mb-1">Aftellen naar de start</div>
+            <div id="race-timer-value" class="text-2xl font-black font-mono tracking-wider neon-amber">--:--:--</div>
+            <div id="race-timer-sub" class="text-2xs text-slate-500 mt-1 font-mono"></div>
+        </div>
+    </div>
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/80 border-b border-slate-800 shadow-xl">
+        <div class="neon-line h-0.5 w-full"></div>
+        <div class="grid grid-cols-2 text-center pb-3 pt-3">
             <div class="border-r border-slate-700/50">
-                <div class="text-3xs uppercase font-bold text-blue-400 tracking-widest">Team Jasper</div>
-                <div id="score-jasper" class="text-3xl font-black mt-1 text-slate-100 transition-all duration-300">0</div>
+                <div class="text-3xs uppercase font-bold text-blue-400 tracking-widest neon-blue">Team Jasper</div>
+                <div id="score-jasper" class="text-3xl font-black mt-1 text-blue-100 neon-blue transition-all duration-300">0</div>
             </div>
             <div>
-                <div class="text-3xs uppercase font-bold text-red-400 tracking-widest">Team Wilfried</div>
-                <div id="score-wilfried" class="text-3xl font-black mt-1 text-slate-100 transition-all duration-300">0</div>
+                <div class="text-3xs uppercase font-bold text-red-400 tracking-widest neon-red">Team Wilfried</div>
+                <div id="score-wilfried" class="text-3xl font-black mt-1 text-red-100 neon-red transition-all duration-300">0</div>
             </div>
         </div>
-        <div class="flex space-x-1 px-3 pb-3 overflow-x-auto">
-            <button onclick="switchTab('dash')" id="tab-dash" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg bg-slate-800 text-white shadow-inner transition-colors min-w-[65px]">📊 Dash</button>
-            <button onclick="switchTab('hyper')" id="tab-hyper" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[65px]">Hypercar</button>
-            <button onclick="switchTab('lmp2')" id="tab-lmp2" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[65px]">LMP2</button>
-            <button onclick="switchTab('lmp2am')" id="tab-lmp2am" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[65px]">Pro-Am</button>
-            <button onclick="switchTab('lmgt3')" id="tab-lmgt3" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[65px]">LMGT3</button>
+        <div class="flex space-x-1 px-2 pb-3 overflow-x-auto">
+            <button onclick="switchTab('dash')" id="tab-dash" class="flex-1 flex flex-col items-center justify-end gap-1 py-2 text-2xs font-bold rounded-lg bg-slate-800 text-white shadow-inner transition-colors min-w-[62px]">
+                <span class="text-lg leading-none h-7 flex items-center">📊</span>
+                <span>Dash</span>
+            </button>
+            <button onclick="switchTab('hyper')" id="tab-hyper" class="flex-1 flex flex-col items-center justify-end gap-1 py-2 text-2xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[62px]">
+                <img src="hypercar.png" alt="Hypercar" class="h-7 w-auto max-w-[52px] object-contain">
+                <span>Hypercar</span>
+            </button>
+            <button onclick="switchTab('lmp2')" id="tab-lmp2" class="flex-1 flex flex-col items-center justify-end gap-1 py-2 text-2xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[62px]">
+                <img src="lmp2.png" alt="LMP2" class="h-7 w-auto max-w-[52px] object-contain">
+                <span>LMP2</span>
+            </button>
+            <button onclick="switchTab('lmp2am')" id="tab-lmp2am" class="flex-1 flex flex-col items-center justify-end gap-1 py-2 text-2xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[62px]">
+                <img src="lmp2.png" alt="Pro-Am" class="h-7 w-auto max-w-[52px] object-contain">
+                <span>Pro-Am</span>
+            </button>
+            <button onclick="switchTab('lmgt3')" id="tab-lmgt3" class="flex-1 flex flex-col items-center justify-end gap-1 py-2 text-2xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[62px]">
+                <img src="gt3.png" alt="LMGT3" class="h-7 w-auto max-w-[52px] object-contain">
+                <span>LMGT3</span>
+            </button>
+            <button onclick="switchTab('program')" id="tab-program" class="flex-1 flex flex-col items-center justify-end gap-1 py-2 text-2xs font-bold rounded-lg text-slate-400 hover:bg-slate-800/50 transition-colors min-w-[62px]">
+                <span class="text-lg leading-none h-7 flex items-center">📅</span>
+                <span>Programma</span>
+            </button>
         </div>
     </header>
     <div class="p-4 max-w-md mx-auto">
@@ -90,6 +164,7 @@
         <div id="panel-lmp2" class="hidden space-y-3 pb-6"></div>
         <div id="panel-lmp2am" class="hidden space-y-3 pb-6"></div>
         <div id="panel-lmgt3" class="hidden space-y-3 pb-6"></div>
+        <div id="panel-program" class="hidden space-y-3 pb-6"></div>
     </div>
     <div class="fixed bottom-0 left-0 w-full backdrop-blur-md bg-slate-950/90 border-t border-slate-800 p-3.5 z-30 shadow-2xl">
         <div id="footer-points" class="flex justify-between items-center max-w-md mx-auto text-3xs text-slate-500 font-mono overflow-x-auto whitespace-nowrap space-x-3 px-1"></div>
@@ -150,15 +225,19 @@
         const DEFAULT_POINTS = { 1: 25, 2: 18, 3: 15, 4: 12, 5: 10, 6: 8, 7: 6, 8: 4, 9: 2, 10: 1 };
         const STORAGE_KEY = 'lemans_pro_state_v6';
         const JOKER_DEADLINE = new Date("2026-06-13T15:59:00+02:00"); // Strikte deadline (Parijs tijdstip)
+        const RACE_START = new Date("2026-06-13T16:00:00+02:00"); // Start 24h Le Mans
+        const RACE_END = new Date("2026-06-14T16:00:00+02:00");   // Finish (start + 24u)
 
         let state = { 
             assignments: {}, 
             positions: {}, 
             jokers: { Jasper: { hyper:'', lmp2:'', lmp2am:'', lmgt3:'' }, Wilfried: { hyper:'', lmp2:'', lmp2am:'', lmgt3:'' } },
             history: { Jasper: [], Wilfried: [] }, 
-            points: { ...DEFAULT_POINTS } 
+            points: { ...DEFAULT_POINTS },
+            program: {}
         };
         let chart = null;
+        let currentProgramDay = 'fri';
 
         function getCategoryById(id) {
             if (id.startsWith('h')) return 'hyper';
@@ -201,7 +280,8 @@
                     Jasper: Array.isArray(hist.Jasper) ? hist.Jasper.map(Number) : [],
                     Wilfried: Array.isArray(hist.Wilfried) ? hist.Wilfried.map(Number) : []
                 },
-                points: points
+                points: points,
+                program: (raw.program && typeof raw.program === 'object') ? raw.program : {}
             };
         }
 
@@ -216,7 +296,7 @@
         }
 
         function switchTab(tabId) {
-            ['dash', 'hyper', 'lmp2', 'lmp2am', 'lmgt3'].forEach(id => {
+            ['dash', 'hyper', 'lmp2', 'lmp2am', 'lmgt3', 'program'].forEach(id => {
                 const panel = document.getElementById(`panel-${id}`);
                 const tab = document.getElementById(`tab-${id}`);
                 const active = id === tabId;
@@ -384,25 +464,55 @@
 
         function generateShareLink() {
             try {
-                const encoded = encodeURIComponent(encodeState(state));
+                // Pool-link bevat NIET het persoonlijke programma (dat blijft van elke speler apart)
+                const poolState = { ...state, program: {} };
+                const encoded = encodeURIComponent(encodeState(poolState));
                 const shareUrl = `${window.location.origin}${window.location.pathname}?state=${encoded}`;
                 navigator.clipboard.writeText(shareUrl)
-                    .then(() => showToast("🔗 Sync-link gekopieerd!"))
+                    .then(() => showToast("🔗 Pool-link gekopieerd!"))
                     .catch(() => prompt("Kopieer handmatig:", shareUrl));
             } catch (e) { showToast("Fout bij genereren", "error"); }
         }
 
         function importSyncLink() {
-            const text = prompt("Plak hier de Sync-Link:");
+            const text = prompt("Plak hier de Pool-Link:");
             if (!text) return;
             try {
                 let str = text.trim();
                 if (str.includes('state=')) { str = str.split('state=')[1].split('&')[0]; }
                 try { str = decodeURIComponent(str); } catch (e) { /* al gedecodeerd */ }
-                state = sanitizeState(decodeState(str));
-                saveToLocalStorage(); renderLists(); renderPointsSettings(); calculateScores(); updateFooterPoints(); updateChart();
-                showToast("☁️ Data & reglement succesvol geïmporteerd!", "info");
+                const incoming = sanitizeState(decodeState(str));
+                incoming.program = state.program; // eigen programma behouden
+                state = incoming;
+                saveToLocalStorage(); renderLists(); renderPointsSettings(); renderProgram(); calculateScores(); updateFooterPoints(); updateChart();
+                showToast("☁️ Pool & reglement geïmporteerd!", "info");
             } catch (e) { showToast("Ongeldige link", "error"); }
+        }
+
+        // ---- Apart delen van het PERSOONLIJKE programma ----
+        function generateProgramLink() {
+            if (!Object.keys(state.program).length) { showToast("Je programma is nog leeg.", "error"); return; }
+            try {
+                const encoded = encodeURIComponent(encodeState({ program: state.program }));
+                const shareUrl = `${window.location.origin}${window.location.pathname}?program=${encoded}`;
+                navigator.clipboard.writeText(shareUrl)
+                    .then(() => showToast("🔗 Programma-link gekopieerd!"))
+                    .catch(() => prompt("Kopieer handmatig:", shareUrl));
+            } catch (e) { showToast("Fout bij genereren", "error"); }
+        }
+
+        function importProgramLink() {
+            const text = prompt("Plak hier de Programma-Link:");
+            if (!text) return;
+            try {
+                let str = text.trim();
+                if (str.includes('program=')) { str = str.split('program=')[1].split('&')[0]; }
+                try { str = decodeURIComponent(str); } catch (e) { /* al gedecodeerd */ }
+                const decoded = decodeState(str);
+                state.program = (decoded && typeof decoded.program === 'object') ? decoded.program : {};
+                saveToLocalStorage(); renderProgram();
+                showToast("📅 Programma geïmporteerd!", "info");
+            } catch (e) { showToast("Ongeldige programma-link", "error"); }
         }
 
         function renderLists() {
@@ -413,7 +523,7 @@
 
             Object.keys(categories).forEach(cat => {
                 const container = document.getElementById(categories[cat]);
-                
+
                 // Basis Utilities box
                 let html = `
                     <div class="mb-3 bg-slate-900 border border-slate-800 p-2.5 rounded-xl shadow-inner space-y-2">
@@ -518,6 +628,314 @@
             });
         }
 
+        // Officieel programma (bron: 24h-lemans.com) — vr 12 t/m zo 14 juni 2026
+        const PROGRAM = {
+            fri: { label: 'Vrijdag 12 juni', items: [
+                { id: 'f1', t1: '08:30', t2: '17:00', l: 'Classic British Welcome', k: 'event', d: 'Verzameling van klassieke Britse auto’s in Saint-Saturnin.' },
+                { id: 'f2', t1: '09:00', t2: '18:00', l: 'M24 – Motorsport Museum', k: 'event', d: 'Het autosportmuseum aan de poort van het circuit.' },
+                { id: 'f3', t1: '09:00', t2: '21:00', l: 'Fan Zones & Kids Zone', k: 'event', d: 'Animaties en activiteiten voor jong en oud.' },
+                { id: 'f4', t1: '10:00', t2: '24:00', l: 'H2 Hydrogen & Constructeursdorp', k: 'event', d: 'Beursvloer met fabrikanten, shops en het waterstof-paddock.' },
+                { id: 'f5', t1: '10:00', t2: '13:00', l: 'Road to Le Mans – Race', k: 'support', d: 'Ondersteunende race voor LMP3- en GT3-auto’s.' },
+                { id: 'f6', t1: '15:00', t2: '23:00', l: "Teloch'Événements", k: 'event', d: 'Auto-meeting “Garage des Légendes” in Teloché.' },
+                { id: 'f7', t1: '15:30', t2: '19:00', l: 'Baan open voor publiek', k: 'event', d: 'Wandel of fiets over het legendarische circuit.' },
+                { id: 'f8', t1: '15:30', t2: '19:00', l: 'Le virage de Mulsanne', k: 'event', d: 'Expo van klassieke en prestige-auto’s bij de Mulsanne-bocht.' },
+                { id: 'f9', t1: '16:00', t2: '16:00', l: '🪧 Pilotenparade (Drivers’ Parade)', k: 'event', d: 'Alle coureurs paraderen door het centrum van Le Mans.' },
+                { id: 'f10', t1: '20:00', t2: '23:30', l: '🎵 Robin Schulz concert', k: 'concert', d: 'Electro-popshow van de Duitse topartiest.' }
+            ]},
+            sat: { label: 'Zaterdag 13 juni', items: [
+                { id: 's1', t1: '09:00', t2: '02:00', l: 'M24 – Motorsport Museum', k: 'event', d: 'Het autosportmuseum, ook ’s nachts geopend.' },
+                { id: 's2', t1: '09:00', t2: '15:00', l: 'Fan Zones & Kids Zone', k: 'event', d: 'Animaties en activiteiten voor het hele gezin.' },
+                { id: 's3', t1: '09:15', t2: '10:00', l: 'Ferrari Challenge – Race 2', k: 'support', d: 'Eénmerkrace met Ferrari’s als opwarmer.' },
+                { id: 's4', t1: '10:00', t2: '24:00', l: 'H2 Hydrogen & Constructeursdorp', k: 'event', d: 'Fabrikantendorp en het waterstof-paddock.' },
+                { id: 's5', t1: '10:30', t2: '11:15', l: 'Porsche Carrera Cup Brésil – Race 2', k: 'support', d: 'Braziliaanse Porsche-eenheidsrace.' },
+                { id: 's6', t1: '12:00', t2: '12:15', l: '🏎️ Warm-up', k: 'race', d: 'Laatste training van 15 min vlak voor de start.' },
+                { id: 's7', t1: '12:30', t2: '12:30', l: 'Demonstratie waterstof-prototype', k: 'event', d: 'Demorun van een waterstofprototype op de baan.' },
+                { id: 's8', t1: '13:35', t2: '15:00', l: 'Gridwalk', k: 'event', d: 'Loop over de grid tussen de auto’s (polsbandje verplicht).' },
+                { id: 's9', t1: '15:00', t2: '15:45', l: 'Officiële startceremonie', k: 'race', d: 'Show en teampresentatie vlak voor de start.' },
+                { id: 's10', t1: '16:00', t2: '16:00', l: '🏁 START 94e editie', k: 'race', d: 'Het rode licht dooft: start van de 24 uur!' },
+                { id: 's11', t1: '16:30', t2: '01:00', l: 'Fan Zones & Kids Zone', k: 'event', d: 'Avond-animaties terwijl de race doorloopt.' },
+                { id: 's12', t1: '20:50', t2: '21:20', l: '🎵 Magic System concert', k: 'concert', d: 'Feestelijke set van de Ivoriaanse groep.' },
+                { id: 's13', t1: '22:15', t2: '23:55', l: '🎵 Mosimann concert', k: 'concert', d: 'Electro-set om de zaterdagavond af te sluiten.' }
+            ]},
+            sun: { label: 'Zondag 14 juni', items: [
+                { id: 'u1', t1: '08:00', t2: '19:00', l: 'M24 – Motorsport Museum', k: 'event', d: 'Laatste kans om het autosportmuseum te bezoeken.' },
+                { id: 'u2', t1: '09:00', t2: '15:00', l: 'Fan Zones & Kids Zone', k: 'event', d: 'Animaties tijdens de sloturen van de race.' },
+                { id: 'u3', t1: '10:00', t2: '17:00', l: 'H2 Hydrogen & Constructeursdorp', k: 'event', d: 'Fabrikantendorp en het waterstof-paddock.' },
+                { id: 'u4', t1: '16:00', t2: '16:00', l: '🏁 FINISH', k: 'race', d: 'Na 24 uur valt om 16:00 de finishvlag.' },
+                { id: 'u5', t1: '16:10', t2: '16:10', l: '🏆 Podium & ererondes', k: 'race', d: 'Huldiging van de winnaars op de pitstraat.' }
+            ]}
+        };
+        const PCOL = {
+            race:    { chip: 'bg-amber-500/15 text-amber-300 border-amber-500/40',     bar: 'bg-amber-500/90 border-amber-300 text-amber-950' },
+            support: { chip: 'bg-blue-500/15 text-blue-300 border-blue-500/40',         bar: 'bg-blue-500/90 border-blue-300 text-blue-950' },
+            concert: { chip: 'bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-500/40', bar: 'bg-fuchsia-500/90 border-fuchsia-300 text-fuchsia-950' },
+            event:   { chip: 'bg-slate-600/30 text-slate-300 border-slate-500/40',      bar: 'bg-slate-500/90 border-slate-300 text-slate-950' },
+            travel:  { chip: 'bg-teal-500/15 text-teal-300 border-teal-500/40',         bar: 'bg-teal-600/80 border-teal-300 text-teal-50 border-dashed' }
+        };
+        const PLABEL = { race: 'Race', support: 'Support', concert: 'Concert', event: 'Event', travel: 'Reistijd' };
+
+        function toMin(hhmm) { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; }
+        function fmtMin(m) { return pad(Math.floor(m / 60)) + ':' + pad(m % 60); }
+
+        function findProgramItem(id) {
+            for (const day of Object.values(PROGRAM)) {
+                const it = day.items.find(i => i.id === id);
+                if (it) return it;
+            }
+            return null;
+        }
+
+        function selectProgramDay(day) { currentProgramDay = day; renderProgram(); }
+
+        function toggleProgramItem(id) {
+            if (state.program[id]) {
+                delete state.program[id];
+            } else {
+                const it = findProgramItem(id);
+                if (it) state.program[id] = { s: it.t1, e: it.t2, travel: 0 };
+            }
+            saveToLocalStorage(); renderProgram();
+        }
+
+        function updateProgramTime(id, field, val) {
+            if (!state.program[id] || !val) return;
+            state.program[id][field] = val;
+            saveToLocalStorage(); renderProgram();
+        }
+
+        function updateProgramTravel(id, val) {
+            if (!state.program[id]) return;
+            let m = parseInt(val, 10);
+            state.program[id].travel = Number.isFinite(m) && m > 0 ? m : 0;
+            saveToLocalStorage(); renderProgram();
+        }
+
+        // Verdeel overlappende blokken over kolommen (kalender-stijl)
+        function packEvents(evts) {
+            evts.sort((a, b) => a.s - b.s || a.e - b.e);
+            let groups = [], cur = [], curEnd = -1;
+            evts.forEach(ev => {
+                if (cur.length && ev.s >= curEnd) { groups.push(cur); cur = []; curEnd = -1; }
+                cur.push(ev); curEnd = Math.max(curEnd, ev.e);
+            });
+            if (cur.length) groups.push(cur);
+            groups.forEach(g => {
+                let colsEnd = [];
+                g.forEach(ev => {
+                    let placed = false;
+                    for (let i = 0; i < colsEnd.length; i++) {
+                        if (ev.s >= colsEnd[i]) { ev.col = i; colsEnd[i] = ev.e; placed = true; break; }
+                    }
+                    if (!placed) { ev.col = colsEnd.length; colsEnd.push(ev.e); }
+                });
+                g.forEach(ev => ev.cols = colsEnd.length);
+            });
+            return evts;
+        }
+
+        function buildCalendar(dayItems) {
+            // dayItems: [{item, s, e, travel}] met s/e in minuten (e kan na middernacht zijn)
+            const allDay = [], timed = [];
+            dayItems.forEach(d => {
+                let e = d.e;
+                if (e <= d.s) e += 1440; // loopt door na middernacht
+                const dur = e - d.s;
+                if (dur >= 360) allDay.push({ ...d, e });
+                else timed.push({ ...d, s: d.s, e: Math.max(e, d.s + 18) });
+                // Reistijd-blok vóór het onderdeel
+                if (d.travel && d.travel > 0) {
+                    timed.push({ item: { l: '🚗 Reistijd → ' + d.item.l.replace(/^[^\wÀ-ÿ]+/, ''), k: 'travel' }, s: d.s - d.travel, e: d.s });
+                }
+            });
+
+            let allDayHtml = '';
+            if (allDay.length) {
+                allDayHtml = `<div class="flex flex-wrap gap-1.5 mb-3">` + allDay.map(d => {
+                    const c = PCOL[d.item.k];
+                    const eDisp = d.e >= 1440 ? d.e - 1440 : d.e;
+                    return `<span class="text-3xs px-2 py-1 rounded-lg border font-bold ${c.chip}">${d.item.l} <span class="opacity-70 font-mono">${fmtMin(d.s)}–${fmtMin(eDisp)}</span></span>`;
+                }).join('') + `</div>`;
+            }
+
+            if (!timed.length) {
+                return allDayHtml + (allDay.length ? '' : `<div class="text-2xs text-slate-500 italic py-6 text-center">Nog niets toegevoegd voor deze dag. Tik hierboven op <span class="text-emerald-400 font-bold">+</span> bij een onderdeel.</div>`);
+            }
+
+            const PX = 58; // pixels per uur
+            let minS = Math.min(...timed.map(t => t.s));
+            let maxE = Math.max(...timed.map(t => t.e));
+            let winS = Math.floor(minS / 60) * 60;
+            let winE = Math.ceil(maxE / 60) * 60;
+            const totalH = (winE - winS) / 60 * PX;
+
+            packEvents(timed);
+
+            let hoursHtml = '';
+            for (let m = winS; m <= winE; m += 60) {
+                const top = (m - winS) / 60 * PX;
+                hoursHtml += `
+                    <div class="absolute left-0 right-0 border-t border-slate-800" style="top:${top}px">
+                        <span class="absolute -top-2 left-0 text-3xs font-mono text-slate-500 bg-slate-900 pr-1">${fmtMin(m % 1440)}</span>
+                    </div>`;
+            }
+
+            let evHtml = timed.map(d => {
+                const c = PCOL[d.item.k];
+                const top = (d.s - winS) / 60 * PX;
+                const h = Math.max((d.e - d.s) / 60 * PX, 22);
+                const widthPct = 100 / d.cols;
+                const leftPct = d.col * widthPct;
+                return `
+                    <div class="absolute rounded-lg border px-1.5 py-0.5 overflow-hidden shadow-md ${c.bar}" style="top:${top}px;height:${h}px;left:${leftPct}%;width:calc(${widthPct}% - 3px)">
+                        <div class="text-3xs font-mono font-bold leading-none opacity-80">${fmtMin(d.s)}</div>
+                        <div class="text-[10px] font-bold leading-tight mt-0.5">${d.item.l}</div>
+                    </div>`;
+            }).join('');
+
+            return allDayHtml + `
+                <div class="relative" style="height:${totalH + 12}px">
+                    ${hoursHtml}
+                    <div class="absolute top-0 bottom-0" style="left:3rem;right:0">
+                        ${evHtml}
+                    </div>
+                </div>`;
+        }
+
+        function renderProgram() {
+            const panel = document.getElementById('panel-program');
+            if (!panel) return;
+
+            const dayTabs = Object.keys(PROGRAM).map(k => {
+                const active = k === currentProgramDay;
+                return `<button onclick="selectProgramDay('${k}')" class="flex-1 py-2 rounded-lg text-2xs font-bold transition-colors ${active ? 'bg-amber-500 text-amber-950 shadow' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}">${PROGRAM[k].label.split(' ').slice(0,2).join(' ')}</button>`;
+            }).join('');
+
+            const day = PROGRAM[currentProgramDay];
+
+            // Officiële lijst met toevoeg-knoppen + korte omschrijving
+            const listHtml = day.items.map(it => {
+                const added = !!state.program[it.id];
+                const c = PCOL[it.k];
+                const tDisp = it.t1 === it.t2 ? it.t1 : `${it.t1}–${it.t2}`;
+                return `
+                    <div class="flex items-start gap-2 py-2.5 border-t border-slate-800/60 first:border-t-0">
+                        <span class="text-3xs font-mono text-slate-400 w-20 shrink-0 pt-0.5">${tDisp}</span>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs font-bold text-slate-100 leading-snug">${it.l}</span>
+                                <span class="text-3xs px-1.5 py-0.5 rounded border font-bold ${c.chip}">${PLABEL[it.k]}</span>
+                            </div>
+                            <div class="text-3xs text-slate-500 leading-snug mt-0.5">${it.d}</div>
+                        </div>
+                        <button onclick="toggleProgramItem('${it.id}')" class="shrink-0 w-8 h-8 rounded-lg border font-black text-sm flex items-center justify-center transition-colors ${added ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400' : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-white'}">${added ? '✓' : '+'}</button>
+                    </div>`;
+            }).join('');
+
+            // Mijn programma (gekozen items voor deze dag)
+            const chosen = day.items.filter(it => state.program[it.id])
+                .map(it => ({ item: it, s: toMin(state.program[it.id].s), e: toMin(state.program[it.id].e), travel: state.program[it.id].travel || 0 }))
+                .sort((a, b) => a.s - b.s);
+
+            const editHtml = chosen.length ? chosen.map(d => {
+                const c = PCOL[d.item.k];
+                const tv = state.program[d.item.id].travel || 0;
+                return `
+                    <div class="py-2.5 border-t border-slate-800/60 first:border-t-0">
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-8 rounded-full ${c.bar.split(' ')[0]} shrink-0"></span>
+                            <span class="text-xs text-slate-200 flex-1 leading-tight truncate">${d.item.l}</span>
+                            <input type="time" value="${state.program[d.item.id].s}" onchange="updateProgramTime('${d.item.id}','s',this.value)" class="bg-slate-950 border border-slate-700 rounded px-1 py-1 text-2xs font-mono text-white outline-none focus:border-amber-500">
+                            <span class="text-slate-600 text-2xs">→</span>
+                            <input type="time" value="${state.program[d.item.id].e}" onchange="updateProgramTime('${d.item.id}','e',this.value)" class="bg-slate-950 border border-slate-700 rounded px-1 py-1 text-2xs font-mono text-white outline-none focus:border-amber-500">
+                            <button onclick="toggleProgramItem('${d.item.id}')" class="shrink-0 w-7 h-7 rounded-lg bg-slate-800 border border-slate-700 text-slate-500 hover:text-red-400 transition-colors">✕</button>
+                        </div>
+                        <div class="flex items-center gap-2 mt-1.5 pl-3.5">
+                            <span class="text-3xs text-teal-400 font-bold">🚗 + Reistijd:</span>
+                            <input type="number" min="0" step="5" value="${tv}" onchange="updateProgramTravel('${d.item.id}', this.value)" class="bg-slate-950 border border-slate-700 rounded px-1.5 py-0.5 w-16 text-2xs font-mono text-white outline-none focus:border-teal-500 text-center" placeholder="0">
+                            <span class="text-3xs text-slate-500">min vóór aankomst${tv > 0 ? ` — vertrek ${fmtMin(((d.s - tv) % 1440 + 1440) % 1440)}` : ''}</span>
+                        </div>
+                    </div>`;
+            }).join('') : '';
+
+            panel.innerHTML = `
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><span class="w-2 h-2 rounded-full bg-amber-500 mr-2"></span> Programma 2026</h3>
+                    <p class="text-2xs text-slate-500 mb-3">Bron: 24h-lemans.com • tijden in Le Mans-tijd (CEST). Tik op <span class="text-emerald-400 font-bold">+</span> om iets aan je eigen programma toe te voegen.</p>
+                    <div class="flex gap-1.5">${dayTabs}</div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
+                    <div class="text-3xs font-bold uppercase tracking-wider text-slate-400 mb-1">Officieel — ${day.label}</div>
+                    ${listHtml}
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-3xs font-bold uppercase tracking-wider text-amber-400 neon-amber">📅 Mijn programma — ${day.label}</div>
+                        <div class="text-3xs text-slate-500 font-mono">${chosen.length} item(s)</div>
+                    </div>
+                    ${buildCalendar(chosen)}
+                </div>
+
+                ${chosen.length ? `
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
+                    <div class="text-3xs font-bold uppercase tracking-wider text-slate-400 mb-1">⏱️ Tijden & reistijd aanpassen</div>
+                    <p class="text-3xs text-slate-500 mb-1">Pas zelf aan wanneer je wilt aankomen of vertrekken, en hoeveel reistijd je nodig hebt.</p>
+                    ${editHtml}
+                </div>` : ''}
+
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg">
+                    <div class="text-3xs font-bold uppercase tracking-wider text-slate-400 mb-2">📤 Mijn programma delen <span class="text-slate-600 normal-case font-normal">(los van de pool)</span></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="generateProgramLink()" class="bg-amber-600/15 hover:bg-amber-600/25 text-amber-300 border border-amber-500/30 font-bold py-2.5 rounded-xl text-2xs transition-colors">🔗 Kopieer programma</button>
+                        <button onclick="importProgramLink()" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-bold py-2.5 rounded-xl text-2xs transition-colors">📥 Plak programma</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function pad(n) { return String(n).padStart(2, '0'); }
+
+        function updateRaceTimer() {
+            const labelEl = document.getElementById('race-timer-label');
+            const valueEl = document.getElementById('race-timer-value');
+            const subEl = document.getElementById('race-timer-sub');
+            if (!labelEl || !valueEl || !subEl) return;
+            const now = new Date();
+
+            if (now < RACE_START) {
+                // Aftellen naar de start
+                let diff = Math.floor((RACE_START - now) / 1000);
+                const d = Math.floor(diff / 86400); diff -= d * 86400;
+                const h = Math.floor(diff / 3600); diff -= h * 3600;
+                const m = Math.floor(diff / 60); const s = diff - m * 60;
+                labelEl.textContent = '⏳ Aftellen naar de start';
+                labelEl.className = 'text-3xs uppercase font-bold tracking-[0.3em] text-amber-400 mb-1 neon-amber';
+                valueEl.className = 'text-2xl font-black font-mono tracking-wider neon-amber';
+                valueEl.textContent = (d > 0 ? d + 'd ' : '') + pad(h) + ':' + pad(m) + ':' + pad(s);
+                subEl.textContent = 'Start: za 13 jun 16:00 (Le Mans)';
+            } else if (now < RACE_END) {
+                // Race bezig: toon verstreken minuten + resterende tijd
+                const elapsedMin = Math.floor((now - RACE_START) / 60000);
+                const eh = Math.floor(elapsedMin / 60);
+                const em = elapsedMin % 60;
+                let rem = Math.floor((RACE_END - now) / 1000);
+                const rh = Math.floor(rem / 3600); rem -= rh * 3600;
+                const rm = Math.floor(rem / 60); const rs = rem - rm * 60;
+                labelEl.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1 align-middle animate-pulse"></span> Race is bezig';
+                labelEl.className = 'text-3xs uppercase font-bold tracking-[0.3em] text-emerald-400 mb-1';
+                valueEl.className = 'text-2xl font-black font-mono tracking-wider neon-red';
+                valueEl.textContent = elapsedMin + ' min gereden';
+                subEl.textContent = `${eh}u ${em}m verstreken • nog ${pad(rh)}:${pad(rm)}:${pad(rs)} te gaan`;
+            } else {
+                labelEl.textContent = '🏁 Race afgelopen';
+                labelEl.className = 'text-3xs uppercase font-bold tracking-[0.3em] text-slate-400 mb-1';
+                valueEl.className = 'text-2xl font-black font-mono tracking-wider neon-amber';
+                valueEl.textContent = 'Finish';
+                subEl.textContent = 'De 24 uur zitten erop!';
+            }
+        }
+
         function updateChart() {
             const hrs = state.history.Jasper.length;
             const labels = Array.from({ length: hrs }, (_, i) => `H${i + 1}`);
@@ -579,13 +997,27 @@
             const urlParams = new URLSearchParams(window.location.search);
             const stateParam = urlParams.get('state');
             if (stateParam) {
-                try { state = sanitizeState(decodeState(decodeURIComponent(stateParam))); } catch(e) {}
+                try {
+                    const myProgram = state.program; // eigen programma niet overschrijven door pool-link
+                    state = sanitizeState(decodeState(decodeURIComponent(stateParam)));
+                    state.program = myProgram;
+                } catch(e) {}
+            }
+            const programParam = urlParams.get('program');
+            if (programParam) {
+                try {
+                    const decoded = decodeState(decodeURIComponent(programParam));
+                    if (decoded && typeof decoded.program === 'object') state.program = decoded.program;
+                } catch(e) {}
             }
             renderLists();
             renderPointsSettings();
+            renderProgram();
             calculateScores();
             updateFooterPoints();
             updateChart();
+            updateRaceTimer();
+            setInterval(updateRaceTimer, 1000);
         };
     </script>
 </body>
